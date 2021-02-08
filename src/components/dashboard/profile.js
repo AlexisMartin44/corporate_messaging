@@ -39,18 +39,31 @@ class ProfileComponent extends React.Component {
       error => {
         console.log(error);
       },
-      () => {
-        firebase
+      async () => {
+        await firebase
           .storage()
           .ref("image")
           .child(file.name)
           .getDownloadURL()
           .then(url => {
             this.setState({ url: url });
+            firebase
+              .firestore()
+              .collection("users")
+              .doc(this.state.user)
+              .update({
+                image: url,
+              });
           });
       }
     );
   };
+
+  static getDerivedStateFromProps(props, state) {
+    state.url = props.image;
+    state.user = props.user;
+    return state;
+  }
 
   render() {
     const { classes } = this.props;
