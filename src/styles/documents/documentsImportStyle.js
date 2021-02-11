@@ -11,6 +11,11 @@ const styles = theme => ({
   input: {
     display: "none",
   },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 180,
+    maxWidth: 300,
+  },
 });
 
 export default styles;

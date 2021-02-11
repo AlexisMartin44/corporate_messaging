@@ -4,6 +4,7 @@ const styles = theme => ({
     justifyContent: "center",
     position: "relative",
     marginTop: "100px",
+    height: "80vh",
   },
   large: {
     width: theme.spacing(50),
@@ -15,6 +16,12 @@ const styles = theme => ({
   button: {
     background: "none",
     boxShadow: "none",
+  },
+  paper: {
+    display: "flex",
+    justifyContent: "center",
+    width: "40%",
+    height: "80%",
   },
 });
 

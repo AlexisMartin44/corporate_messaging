@@ -49,7 +49,7 @@ class NavBar extends React.Component {
     );
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     firebase.auth().onAuthStateChanged(async _usr => {
       if (!_usr) this.props.history.push("/login");
     });

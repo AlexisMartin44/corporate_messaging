@@ -7,7 +7,7 @@ import PersonPinIcon from "@material-ui/icons/PersonPin";
 import MessageComponent from "../messages/messageComponent";
 import firebase from "firebase";
 import NavBar from "../partials/navBar";
-import DocumentComponent from "./documents";
+import DocumentComponent from "../documents/documents";
 import ProfileComponent from "./profile";
 
 class DashboardComponent extends React.Component {
@@ -19,6 +19,8 @@ class DashboardComponent extends React.Component {
       isAdmin: false,
       chats: [],
       value: 2,
+      service: "",
+      position: "",
     };
   }
   render() {
@@ -47,7 +49,13 @@ class DashboardComponent extends React.Component {
         {this.state.value === 0 && (
           <MessageComponent history={this.props.history} />
         )}
-        {this.state.value === 1 && <DocumentComponent />}
+        {this.state.value === 1 && (
+          <DocumentComponent
+            isAdmin={this.state.isAdmin}
+            service={this.state.service}
+            position={this.state.position}
+          />
+        )}
         {this.state.value === 2 && (
           <ProfileComponent image={this.state.image} user={this.state.email} />
         )}
@@ -55,7 +63,7 @@ class DashboardComponent extends React.Component {
     );
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     firebase.auth().onAuthStateChanged(async _usr => {
       if (_usr) {
         await firebase
@@ -74,6 +82,8 @@ class DashboardComponent extends React.Component {
               email: _usr.email,
               image: userData.image,
               isAdmin: userData.isAdmin,
+              service: userData.service,
+              position: userData.position,
               friends: [],
             });
           });

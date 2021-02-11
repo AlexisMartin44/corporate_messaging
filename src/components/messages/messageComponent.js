@@ -153,7 +153,7 @@ class MessageComponent extends React.Component {
       this.state.chats[chatIndex].messages.length - 1
     ].sender !== this.state.email;
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     firebase.auth().onAuthStateChanged(async _usr => {
       if (_usr) {
         await firebase

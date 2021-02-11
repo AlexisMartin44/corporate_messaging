@@ -58,10 +58,6 @@ class MessageList extends React.Component {
                       secondary={
                         <React.Fragment>
                           <Typography component="span" color="textPrimary">
-                            {console.log(
-                              "HEHO",
-                              _chat.messages[_chat.messages.length - 1]
-                            )}
                             {_chat.messages[
                               _chat.messages.length - 1
                             ].message.substring(0, 30) + " ..."}

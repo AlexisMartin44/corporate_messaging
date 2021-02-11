@@ -3,7 +3,7 @@ import styles from "../../styles/dashboard/profileStyle";
 import { withStyles } from "@material-ui/core/styles";
 import firebase from "firebase";
 import "firebase/storage";
-import { Avatar, Button } from "@material-ui/core";
+import { Avatar, Button, Paper } from "@material-ui/core";
 import { CollectionsBookmarkOutlined } from "@material-ui/icons";
 
 class ProfileComponent extends React.Component {
@@ -69,24 +69,22 @@ class ProfileComponent extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <input
-          accept="image/*"
-          className={classes.input}
-          id="contained-button-file"
-          type="file"
-          onChange={e => {
-            this.handleChange(e.target.files);
-          }}
-        />
-        <label htmlFor="contained-button-file">
-          <Button className={classes.button} color="primary" component="span">
-            <Avatar
-              alt="Cindy Baker"
-              src={this.state.url}
-              className={classes.large}
-            />
-          </Button>
-        </label>
+        <Paper elevation={3} className={classes.paper}>
+          <input
+            accept="image/*"
+            className={classes.input}
+            id="contained-button-file"
+            type="file"
+            onChange={e => {
+              this.handleChange(e.target.files);
+            }}
+          />
+          <label htmlFor="contained-button-file">
+            <Button className={classes.button} color="primary" component="span">
+              <Avatar src={this.state.url} className={classes.large} />
+            </Button>
+          </label>
+        </Paper>
       </div>
     );
   }
