@@ -3,15 +3,13 @@ import styles from "../../styles/dashboard/profileStyle";
 import { withStyles } from "@material-ui/core/styles";
 import firebase from "firebase";
 import "firebase/storage";
-import { Avatar, Button, Paper } from "@material-ui/core";
+import { Avatar, Button, Paper, Typography } from "@material-ui/core";
 import { CollectionsBookmarkOutlined } from "@material-ui/icons";
 
 class ProfileComponent extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      files: null,
-      url: "",
       progress: 0,
     };
   }
@@ -50,7 +48,7 @@ class ProfileComponent extends React.Component {
             firebase
               .firestore()
               .collection("users")
-              .doc(this.state.user)
+              .doc(this.props.userData.email)
               .update({
                 image: url,
               });
@@ -58,12 +56,6 @@ class ProfileComponent extends React.Component {
       }
     );
   };
-
-  static getDerivedStateFromProps(props, state) {
-    state.url = props.image;
-    state.user = props.user;
-    return state;
-  }
 
   render() {
     const { classes } = this.props;
@@ -81,9 +73,13 @@ class ProfileComponent extends React.Component {
           />
           <label htmlFor="contained-button-file">
             <Button className={classes.button} color="primary" component="span">
-              <Avatar src={this.state.url} className={classes.large} />
+              <Avatar
+                src={this.props.userData.image}
+                className={classes.large}
+              />
             </Button>
           </label>
+          <Typography>{this.props.userData.isAdmin}</Typography>
         </Paper>
       </div>
     );

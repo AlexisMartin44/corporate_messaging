@@ -14,13 +14,10 @@ class DashboardComponent extends React.Component {
   constructor() {
     super();
     this.state = {
-      email: "",
-      image: "",
-      isAdmin: false,
       chats: [],
       value: 2,
-      service: "",
-      position: "",
+      userData: "",
+      applicationRequests: [],
     };
   }
   render() {
@@ -31,7 +28,10 @@ class DashboardComponent extends React.Component {
     };
     return (
       <div>
-        <NavBar history={this.props.history} />
+        <NavBar
+          history={this.props.history}
+          applicationRequests={this.state.applicationRequests}
+        />
         <Paper square className={classes.root}>
           <Tabs
             value={this.state.value}
@@ -51,19 +51,19 @@ class DashboardComponent extends React.Component {
         )}
         {this.state.value === 1 && (
           <DocumentComponent
-            isAdmin={this.state.isAdmin}
-            service={this.state.service}
-            position={this.state.position}
+            isAdmin={this.state.userData.isAdmin}
+            service={this.state.userData.service}
+            position={this.state.userData.position}
           />
         )}
         {this.state.value === 2 && (
-          <ProfileComponent image={this.state.image} user={this.state.email} />
+          <ProfileComponent userData={this.state.userData} />
         )}
       </div>
     );
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     firebase.auth().onAuthStateChanged(async _usr => {
       if (_usr) {
         await firebase
@@ -79,13 +79,20 @@ class DashboardComponent extends React.Component {
               }
             }
             await this.setState({
-              email: _usr.email,
-              image: userData.image,
-              isAdmin: userData.isAdmin,
-              service: userData.service,
-              position: userData.position,
+              userData: userData,
               friends: [],
             });
+
+            if (userData.isAdmin) {
+              await firebase
+                .firestore()
+                .collection("applicationRequest")
+                .onSnapshot(async res => {
+                  this.setState({
+                    applicationRequests: res.docs.map(_doc => _doc.data()),
+                  });
+                });
+            }
           });
       }
     });

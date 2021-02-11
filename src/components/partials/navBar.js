@@ -1,11 +1,15 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Badge,
+  IconButton,
+} from "@material-ui/core";
 import firebase from "firebase";
-import { CollectionsBookmarkOutlined } from "@material-ui/icons";
+import NotificationsIcon from "@material-ui/icons/Notifications";
 
 const useStyles = theme => ({
   root: {
@@ -34,6 +38,13 @@ class NavBar extends React.Component {
             <Typography variant="h6" className={classes.title}>
               Corporate Messaging
             </Typography>
+            <div className={classes.sectionDesktop}>
+              <IconButton aria-label="show notifications" color="inherit">
+                <Badge badgeContent={17} color="secondary">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+            </div>
             <Button
               onClick={async () => {
                 this.props.history.push("/login");

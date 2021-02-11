@@ -20,8 +20,8 @@ const styles = theme => ({
   paper: {
     display: "flex",
     justifyContent: "center",
-    width: "40%",
-    height: "80%",
+    width: "80%",
+    height: "60%",
   },
 });
 
