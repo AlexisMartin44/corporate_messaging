@@ -79,7 +79,7 @@ class ProfileComponent extends React.Component {
               />
             </Button>
           </label>
-          <Typography>{this.props.userData.isAdmin}</Typography>
+          <Typography variant="h4">{this.props.userData.isAdmin ? "Is Admin" : "Not an admin"}</Typography>
         </Paper>
       </div>
     );
