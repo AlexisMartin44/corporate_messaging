@@ -167,7 +167,7 @@ class DocumentTableComponent extends React.Component {
                     .slice(
                       this.state.page * this.state.rowsPerPage,
                       this.state.page * this.state.rowsPerPage +
-                        this.state.rowsPerPage
+                      this.state.rowsPerPage
                     )
                     .map((row, index) => {
                       const labelId = `enhanced-table-checkbox-${index}`;

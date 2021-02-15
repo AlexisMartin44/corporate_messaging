@@ -14,7 +14,6 @@ import {
 import firebase from "firebase";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
-import { AddAlarmOutlined } from "@material-ui/icons";
 
 const useStyles = theme => ({
   root: {
@@ -56,8 +55,6 @@ class NavBar extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log(this.props.applicationRequests);
-
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -139,9 +136,15 @@ class NavBar extends React.Component {
 
   addApplication = async application => {
 
+    const config = {
+      apiKey: "AIzaSyA4q3i0kbwLYXW2S-KsMJ0-cEkSHVaTF2o",
+      authDomain: "msg-instant.firebaseapp.com",
+      projectId: "msg-instant",
+    };
+    const secondaryApp = firebase.initializeApp(config, "Secondary");
 
 
-    firebase
+    secondaryApp
       .auth()
       .createUserWithEmailAndPassword(application.email, application.password)
       .then(
@@ -156,13 +159,20 @@ class NavBar extends React.Component {
             friends: [],
             messages: [],
           };
-          firebase
+          secondaryApp
             .firestore()
             .collection("users")
             .doc(application.email)
             .set(userObj)
             .then(
-              () => {
+              async () => {
+                await secondaryApp
+                  .firestore()
+                  .collection("applicationRequest")
+                  .doc(application.email)
+                  .delete();
+                secondaryApp.auth().signOut();
+                secondaryApp.delete();
               },
               dbErr => {
                 console.log("Failed to add user to the database: ", dbErr);
@@ -175,12 +185,6 @@ class NavBar extends React.Component {
           this.setState({ signupError: "Failed to add user" });
         }
       );
-
-    await firebase
-      .firestore()
-      .collection("applicationRequest")
-      .doc(application.email)
-      .delete();
   };
 
   componentDidMount = () => {

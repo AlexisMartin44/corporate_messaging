@@ -46,12 +46,12 @@ class MessageComponent extends React.Component {
             ></MessageView>
           )}
           {this.state.selectedChat !== null &&
-          !this.state.newChatFormVisible ? (
-            <MessageTextBox
-              userClickedInputFn={this.messageRead}
-              submitMessageFn={this.submitMessage}
-            ></MessageTextBox>
-          ) : null}
+            !this.state.newChatFormVisible ? (
+              <MessageTextBox
+                userClickedInputFn={this.messageRead}
+                submitMessageFn={this.submitMessage}
+              ></MessageTextBox>
+            ) : null}
           {this.state.newChatFormVisible ? (
             <NewMessage
               goToChatFn={this.goToChat}

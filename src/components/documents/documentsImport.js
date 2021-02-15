@@ -142,23 +142,23 @@ class DocumentImportComponent extends React.Component {
           >
             {this.state.selectValue == "service"
               ? services.map(name => (
-                  <MenuItem
-                    key={name}
-                    value={name}
-                    style={getStyles(name, this.state.destinationFiles)}
-                  >
-                    {name}
-                  </MenuItem>
-                ))
+                <MenuItem
+                  key={name}
+                  value={name}
+                  style={getStyles(name, this.state.destinationFiles)}
+                >
+                  {name}
+                </MenuItem>
+              ))
               : positions.map(name => (
-                  <MenuItem
-                    key={name}
-                    value={name}
-                    style={getStyles(name, this.state.destinationFiles)}
-                  >
-                    {name}
-                  </MenuItem>
-                ))}
+                <MenuItem
+                  key={name}
+                  value={name}
+                  style={getStyles(name, this.state.destinationFiles)}
+                >
+                  {name}
+                </MenuItem>
+              ))}
           </Select>
         </FormControl>
 
