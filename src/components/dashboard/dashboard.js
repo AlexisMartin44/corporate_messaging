@@ -15,7 +15,7 @@ class DashboardComponent extends React.Component {
     super();
     this.state = {
       chats: [],
-      value: 2,
+      value: 3,
       userData: "",
       applicationRequests: [],
     };
@@ -28,6 +28,19 @@ class DashboardComponent extends React.Component {
     };
     return (
       <div>
+        {this.state.value === 0 && (
+          <MessageComponent history={this.props.history} />
+        )}
+        {this.state.value === 1 && (
+          <DocumentComponent
+            isAdmin={this.state.userData.isAdmin}
+            service={this.state.userData.service}
+            position={this.state.userData.position}
+          />
+        )}
+        {this.state.value === 2 && (
+          <ProfileComponent userData={this.state.userData} />
+        )}
         <NavBar
           history={this.props.history}
           applicationRequests={this.state.applicationRequests}
@@ -46,19 +59,6 @@ class DashboardComponent extends React.Component {
             <Tab icon={<PersonPinIcon />} label="Profile" />
           </Tabs>
         </Paper>
-        {this.state.value === 0 && (
-          <MessageComponent history={this.props.history} />
-        )}
-        {this.state.value === 1 && (
-          <DocumentComponent
-            isAdmin={this.state.userData.isAdmin}
-            service={this.state.userData.service}
-            position={this.state.userData.position}
-          />
-        )}
-        {this.state.value === 2 && (
-          <ProfileComponent userData={this.state.userData} />
-        )}
       </div>
     );
   }
@@ -91,11 +91,13 @@ class DashboardComponent extends React.Component {
                   this.setState({
                     applicationRequests: res.docs.map(_doc => _doc.data()),
                   });
+                  this.setState({ value: 2 });
                 });
             }
           });
       }
     });
+
   };
 }
 

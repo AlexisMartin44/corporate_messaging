@@ -213,48 +213,26 @@ class RegisterComponent extends React.Component {
 
   formIsValid = () => this.state.password === this.state.passwordConfirmation;
 
-  submitSignup = (e, state) => {
+  submitSignup = async (e, state) => {
     e.preventDefault(); // This is to prevent the automatic refreshing of the page on submit.
     if (!this.formIsValid()) {
       this.setState({ signupError: "Passwords do not match" });
       return;
     }
 
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(
-        authRes => {
-          const userObj = {
-            email: authRes.user.email,
-            service: state.service,
-            position: state.position,
-            firstName: state.firstName,
-            lastName: state.lastName,
-            isAdmin: false,
-            friends: [],
-            messages: [],
-          };
-          firebase
-            .firestore()
-            .collection("users")
-            .doc(this.state.email)
-            .set(userObj)
-            .then(
-              () => {
-                this.props.history.push("/dashboard");
-              },
-              dbErr => {
-                console.log("Failed to add user to the database: ", dbErr);
-                this.setState({ signupError: "Failed to add user" });
-              }
-            );
-        },
-        authErr => {
-          console.log("Failed to create user: ", authErr);
-          this.setState({ signupError: "Failed to add user" });
-        }
-      );
+    await firebase
+      .firestore()
+      .collection("applicationRequest")
+      .doc(this.state.email)
+      .set({
+        email: this.state.email,
+        service: this.state.service,
+        position: this.state.position,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        password: this.state.password,
+        date: Date.now(),
+      });
   };
 }
 

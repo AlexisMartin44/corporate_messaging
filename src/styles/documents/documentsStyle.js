@@ -14,6 +14,9 @@ const styles = theme => ({
     marginTop: "120px",
     textAlign: "center",
   },
+  positionComponent: {
+    marginBottom: "75px",
+  }
 });
 
 export default styles;

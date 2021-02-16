@@ -2,13 +2,30 @@ const styles = theme => ({
   root: {
     display: "flex",
     justifyContent: "center",
+    alignItems: "center",
     position: "relative",
-    marginTop: "100px",
-    height: "80vh",
+    marginTop: "75px",
+    height: "70vh",
+  },
+  card: {
+    borderRadius: 12,
+    textAlign: "center",
+    minWidth: 500,
+    marginRight: "15px"
+  },
+  secondCard: {
+    borderRadius: 12,
+    textAlign: "center",
+    minWidth: 500,
+    marginLeft: "15px",
+  },
+  cardHeader: {
+    textAlign: "center",
+    spacing: 10,
   },
   large: {
-    width: theme.spacing(50),
-    height: theme.spacing(50),
+    width: theme.spacing(40),
+    height: theme.spacing(40),
   },
   input: {
     display: "none",
@@ -17,12 +34,27 @@ const styles = theme => ({
     background: "none",
     boxShadow: "none",
   },
-  paper: {
+  typo: {
+    margin: "10px",
+    marginTop: "20px",
+    verticalAlign: "center",
+  },
+  element: {
+    display: "flex",
+    justifyContent: "space-evenly",
+    alignItems: "center"
+  },
+  typoElement: {
+    width: "200px"
+  },
+  stats: {
     display: "flex",
     justifyContent: "center",
-    width: "80%",
-    height: "60%",
+    alignItems: "center"
   },
+  marginLeft: {
+    marginLeft: "10px"
+  }
 });
 
 export default styles;

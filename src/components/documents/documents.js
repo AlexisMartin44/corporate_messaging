@@ -48,7 +48,9 @@ class DocumentComponent extends React.Component {
           <Typography variant="h5" className={classes.typo}>
             Position : {this.props.position}
           </Typography>
-          <DocumentTableComponent files={this.state.positionFiles} />
+          <div className={classes.positionComponent}>
+            <DocumentTableComponent files={this.state.positionFiles} />
+          </div>
         </div>
       </div>
     );

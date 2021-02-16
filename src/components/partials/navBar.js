@@ -18,7 +18,7 @@ import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 const useStyles = theme => ({
   root: {
     flexGrow: 1,
-    position: "absolute",
+    position: "fixed",
     top: "0",
     left: "0",
     width: "100%",
@@ -155,6 +155,7 @@ class NavBar extends React.Component {
             position: application.position,
             firstName: application.firstName,
             lastName: application.lastName,
+            date: application.date,
             isAdmin: false,
             friends: [],
             messages: [],
