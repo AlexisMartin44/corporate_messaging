@@ -10,26 +10,53 @@ import {
   Divider,
   Button,
   ListItemIcon,
+  AppBar,
+  Toolbar,
+  TextField
 } from "@material-ui/core";
 import styles from "../../styles/messages/messageListStyle";
 import NotificationImportant from "@material-ui/icons/NotificationImportant";
+import Autocomplete, { createFilterOptions } from "@material-ui/lab/Autocomplete";
 
 class MessageList extends React.Component {
+
+  constructor() {
+    super();
+    this.state = {
+      searchValue: "",
+    };
+  }
+
+  filterOptions = createFilterOptions({
+    matchFrom: "any",
+    stringify: (option) => option.firstName + " " + option.lastName,
+  });
+
   render() {
     const { classes } = this.props;
 
     if (this.props.chats.length > 0) {
       return (
         <div className={classes.root}>
-          <Button
-            variant="contained"
-            fullWidth
-            color="primary"
-            onClick={this.newChat}
-            className={classes.newChatBtn}
-          >
-            New Message
-          </Button>
+          <AppBar position="static">
+            <Toolbar className={classes.toolbar}>
+              <Autocomplete
+                className={classes.autocomplete}
+                freeSolo
+                id="filter-demo"
+                options={this.props.users}
+                getOptionLabel={(option) => option.first_name}
+                filterOptions={this.filterOptions}
+                style={{ width: 300 }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Search" />
+                )}
+                renderOption={(option) => (
+                  <Button>{option.firstName}</Button>
+                )}
+              />
+            </Toolbar>
+          </AppBar>
           <List>
             {this.props.chats.map((_chat, _index) => {
               return (
@@ -66,13 +93,13 @@ class MessageList extends React.Component {
                       }
                     />
                     {_chat.receiverHasRead === false &&
-                    !this.userIsSender(_chat) ? (
-                      <ListItemIcon>
-                        <NotificationImportant
-                          className={classes.unreadMessage}
-                        ></NotificationImportant>
-                      </ListItemIcon>
-                    ) : null}
+                      !this.userIsSender(_chat) ? (
+                        <ListItemIcon>
+                          <NotificationImportant
+                            className={classes.unreadMessage}
+                          ></NotificationImportant>
+                        </ListItemIcon>
+                      ) : null}
                   </ListItem>
                   <Divider />
                 </div>
@@ -103,6 +130,10 @@ class MessageList extends React.Component {
     chat.messages[chat.messages.length - 1].sender === this.props.userEmail;
   newChat = () => this.props.newChatBtnFn();
   selectChat = index => this.props.selectChatFn(index);
+
+  handleChange = event => {
+    this.setState({ searchValue: event.target.value });
+  };
 }
 
 export default withStyles(styles)(MessageList);

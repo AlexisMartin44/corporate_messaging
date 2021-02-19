@@ -157,8 +157,7 @@ class NavBar extends React.Component {
             lastName: application.lastName,
             date: application.date,
             isAdmin: false,
-            friends: [],
-            messages: [],
+            image: ""
           };
           secondaryApp
             .firestore()

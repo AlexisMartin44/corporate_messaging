@@ -1,3 +1,5 @@
+import { fade } from '@material-ui/core/styles';
+
 const styles = theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
@@ -11,16 +13,21 @@ const styles = theme => ({
   listItem: {
     cursor: "pointer",
   },
-  newChatBtn: {
-    borderRadius: "0px",
-    height: "48px",
-  },
   unreadMessage: {
     color: "red",
     position: "absolute",
     top: "0",
     right: "5px",
   },
+  toolbar: {
+    padding: 0,
+    paddingRight: "15px",
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  autocomplete: {
+    maxWidth: "270px",
+  }
 });
 
 export default styles;

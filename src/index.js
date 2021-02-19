@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Route, BrowserRouter } from "react-router-dom";
+import { Route, BrowserRouter, Redirect } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme";
 import reportWebVitals from "./reportWebVitals";
@@ -27,6 +27,7 @@ firebase.initializeApp({
 const routing = (
   <ThemeProvider theme={theme}>
     <BrowserRouter>
+      {/* <Route path="/">{<Redirect to="/login" />}</Route> */}
       <Route path="/login" component={LoginComponent}></Route>
       <Route path="/register" component={RegisterComponent}></Route>
       <Route path="/dashboard" component={DashboardComponent}></Route>

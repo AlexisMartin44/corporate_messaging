@@ -24,6 +24,7 @@ class MessageComponent extends React.Component {
       email: null,
       friends: [],
       chats: [],
+      users: [],
     };
   }
 
@@ -32,6 +33,7 @@ class MessageComponent extends React.Component {
       return (
         <div className="dashboard-container" id="dashboard-container">
           <MessageList
+            users={this.state.users}
             history={this.props.history}
             userEmail={this.state.email}
             selectChatFn={this.selectChat}
@@ -167,6 +169,16 @@ class MessageComponent extends React.Component {
               email: _usr.email,
               chats: chats,
               friends: [],
+            });
+          });
+
+        await firebase
+          .firestore()
+          .collection("users")
+          .onSnapshot(async res => {
+            const users = res.docs.map(_doc => _doc.data());
+            await this.setState({
+              users: users,
             });
           });
       }
