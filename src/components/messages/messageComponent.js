@@ -6,6 +6,7 @@ import MessageTextBox from "./messageTextBox";
 import styles from "../../styles/messages/messageComponentStyle";
 import { Button, withStyles } from "@material-ui/core";
 import firebase from "firebase";
+import ProfileComponent from "../dashboard/profile";
 
 // I need to investigate why sometimes
 // two messages will send instead of just
@@ -25,7 +26,13 @@ class MessageComponent extends React.Component {
       friends: [],
       chats: [],
       users: [],
+      userVisible: false,
+      userToShow: null,
     };
+  }
+
+  setUserToShow = async (user) => {
+    await this.setState({ userToShow: user, userVisible: true, newChatFormVisible: false, selectedChat: null });
   }
 
   render() {
@@ -40,6 +47,7 @@ class MessageComponent extends React.Component {
             chats={this.state.chats}
             selectedChatIndex={this.state.selectedChat}
             newChatBtnFn={this.newChatBtnClicked}
+            setUserToShow={this.setUserToShow}
           ></MessageList>
           {this.state.newChatFormVisible ? null : (
             <MessageView
@@ -47,6 +55,9 @@ class MessageComponent extends React.Component {
               chat={this.state.chats[this.state.selectedChat]}
             ></MessageView>
           )}
+          {
+            this.state.userVisible ? (<ProfileComponent toShow={true} userData={this.state.userToShow} />) : null
+          }
           {this.state.selectedChat !== null &&
             !this.state.newChatFormVisible ? (
               <MessageTextBox
@@ -56,6 +67,7 @@ class MessageComponent extends React.Component {
             ) : null}
           {this.state.newChatFormVisible ? (
             <NewMessage
+              user={this.state.userToShow}
               goToChatFn={this.goToChat}
               newChatSubmitFn={this.newChatSubmit}
             ></NewMessage>
@@ -94,7 +106,7 @@ class MessageComponent extends React.Component {
   buildDocKey = friend => [this.state.email, friend].sort().join(":");
 
   newChatBtnClicked = () =>
-    this.setState({ newChatFormVisible: true, selectedChat: null });
+    this.setState({ newChatFormVisible: true, selectedChat: null, userVisible: false });
 
   newChatSubmit = async chatObj => {
     const docKey = this.buildDocKey(chatObj.sendTo);
@@ -117,7 +129,7 @@ class MessageComponent extends React.Component {
   };
 
   selectChat = async chatIndex => {
-    await this.setState({ selectedChat: chatIndex, newChatFormVisible: false });
+    await this.setState({ selectedChat: chatIndex, newChatFormVisible: false, userVisible: false, userToShow: null });
     this.messageRead();
   };
 

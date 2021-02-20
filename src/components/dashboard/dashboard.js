@@ -15,7 +15,7 @@ class DashboardComponent extends React.Component {
     super();
     this.state = {
       chats: [],
-      value: 3,
+      value: 0,
       userData: "",
       applicationRequests: [],
     };
@@ -39,7 +39,7 @@ class DashboardComponent extends React.Component {
           />
         )}
         {this.state.value === 2 && (
-          <ProfileComponent userData={this.state.userData} />
+          <ProfileComponent toShow={false} userData={this.state.userData} />
         )}
         <NavBar
           history={this.props.history}

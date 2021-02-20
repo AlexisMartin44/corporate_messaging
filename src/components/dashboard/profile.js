@@ -65,13 +65,16 @@ class ProfileComponent extends React.Component {
     const { classes } = this.props;
     const date = new Date(this.props.userData.date);
     return (
-      <div className={classes.root}>
+      <div className={this.props.toShow ? classes.rootToShow : classes.root}>
         <Card className={classes.card}>
           <CardHeader title="Profile" className={classes.cardHeader} />
           <Divider variant="middle" />
-          <CardContent>
+          <CardContent className={classes.cardContent}>
             {this.props.userData.isAdmin ? <Typography variant="h5" className={classes.typo}>Admin</Typography> : <div></div>}
-            <input
+            {this.props.toShow ? <Avatar
+              src={this.props.userData.image}
+              className={classes.large}
+            /> : <div><input
               accept="image/*"
               className={classes.input}
               id="contained-button-file"
@@ -80,14 +83,14 @@ class ProfileComponent extends React.Component {
                 this.handleChange(e.target.files);
               }}
             />
-            <label htmlFor="contained-button-file">
-              <Button className={classes.button} color="primary" component="span">
-                <Avatar
-                  src={this.props.userData.image}
-                  className={classes.large}
-                />
-              </Button>
-            </label>
+                <label htmlFor="contained-button-file">
+                  <Button className={classes.button} color="primary" component="span">
+                    <Avatar
+                      src={this.props.userData.image}
+                      className={classes.large}
+                    />
+                  </Button>
+                </label></div>}
             <Typography className={classes.typo} variant="h4">{this.props.userData.firstName} {this.props.userData.lastName}</Typography>
           </CardContent>
         </Card>

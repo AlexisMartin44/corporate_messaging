@@ -7,6 +7,16 @@ const styles = theme => ({
     marginTop: "75px",
     height: "70vh",
   },
+  rootToShow: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    left: "20%",
+    marginTop: "75px",
+    height: "70vh",
+    width: "70%",
+  },
   card: {
     borderRadius: 12,
     textAlign: "center",
@@ -54,6 +64,11 @@ const styles = theme => ({
   },
   marginLeft: {
     marginLeft: "10px"
+  },
+  cardContent: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
   }
 });
 

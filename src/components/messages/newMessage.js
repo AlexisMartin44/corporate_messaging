@@ -16,7 +16,6 @@ class NewMessage extends React.Component {
   constructor() {
     super();
     this.state = {
-      username: null,
       message: null,
     };
   }
@@ -29,21 +28,10 @@ class NewMessage extends React.Component {
         <CssBaseline />
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h5">
-            Send A Message!
+            Send a message to {this.props.user.firstName} !
           </Typography>
           <form className={classes.form} onSubmit={e => this.submitNewChat(e)}>
-            <FormControl fullWidth>
-              <InputLabel htmlFor="new-chat-username">
-                Enter Your Colleague's Email
-              </InputLabel>
-              <Input
-                required
-                className={classes.input}
-                autoFocus
-                onChange={e => this.userTyping("username", e)}
-                id="new-chat-username"
-              ></Input>
-            </FormControl>
+
             <FormControl fullWidth>
               <InputLabel htmlFor="new-chat-message">
                 Enter Your Message
@@ -51,7 +39,7 @@ class NewMessage extends React.Component {
               <Input
                 required
                 className={classes.input}
-                onChange={e => this.userTyping("message", e)}
+                onChange={e => this.userTyping(e)}
                 id="new-chat-message"
               ></Input>
             </FormControl>
@@ -83,19 +71,8 @@ class NewMessage extends React.Component {
     if (!firebase.auth().currentUser) this.props.history.push("/login");
   }
 
-  userTyping = (inputType, e) => {
-    switch (inputType) {
-      case "username":
-        this.setState({ username: e.target.value });
-        break;
-
-      case "message":
-        this.setState({ message: e.target.value });
-        break;
-
-      default:
-        break;
-    }
+  userTyping = (e) => {
+    this.setState({ message: e.target.value });
   };
 
   submitNewChat = async e => {
@@ -108,11 +85,11 @@ class NewMessage extends React.Component {
   };
 
   buildDocKey = () =>
-    [firebase.auth().currentUser.email, this.state.username].sort().join(":");
+    [firebase.auth().currentUser.email, this.props.user.email].sort().join(":");
 
   createChat = () => {
     this.props.newChatSubmitFn({
-      sendTo: this.state.username,
+      sendTo: this.props.user.email,
       message: this.state.message,
     });
   };
@@ -134,7 +111,7 @@ class NewMessage extends React.Component {
     const usersSnapshot = await firebase.firestore().collection("users").get();
     const exists = usersSnapshot.docs
       .map(_doc => _doc.data().email)
-      .includes(this.state.username);
+      .includes(this.props.user.email);
     this.setState({ serverError: !exists });
     return exists;
   };

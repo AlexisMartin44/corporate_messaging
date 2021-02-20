@@ -47,6 +47,12 @@ const useStyles = theme => ({
   },
   button: {
     marginBottom: "5px"
+  },
+  appbar: {
+    maxHeight: "10vh",
+  },
+  toolbar: {
+    maxHeight: "100%",
   }
 });
 
@@ -57,8 +63,8 @@ class NavBar extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="static">
-          <Toolbar>
+        <AppBar position="static" className={classes.appbar}>
+          <Toolbar className={classes.toolbar}>
             <Typography variant="h6" className={classes.title}>
               Corporate Messaging
             </Typography>
