@@ -232,6 +232,9 @@ class RegisterComponent extends React.Component {
         lastName: this.state.lastName,
         password: this.state.password,
         date: Date.now(),
+      })
+      .then(() => {
+        this.props.history.push("/login");
       });
   };
 }

@@ -8,6 +8,9 @@ const styles = theme => ({
     display: "flex",
     width: "50%",
     justifyContent: "center",
+    [theme.breakpoints.down('xs')]: {
+      width: "100%"
+    },
   },
   paper: {
     width: "100%",

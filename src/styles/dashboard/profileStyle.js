@@ -4,8 +4,13 @@ const styles = theme => ({
     justifyContent: "center",
     alignItems: "center",
     position: "relative",
-    marginTop: "75px",
+    marginTop: "80px",
     height: "70vh",
+    [theme.breakpoints.down('1050')]: {
+      flexDirection: "column",
+      justifyContent: "start",
+      height: "120vh"
+    },
   },
   rootToShow: {
     display: "flex",
@@ -21,13 +26,35 @@ const styles = theme => ({
     borderRadius: 12,
     textAlign: "center",
     minWidth: 500,
-    marginRight: "15px"
+    marginRight: "15px",
+    [theme.breakpoints.down('1050')]: {
+      minWidth: 400,
+      maxWidth: "100%",
+      minHeight: 550,
+      marginRight: 0,
+    },
+    [theme.breakpoints.down("xs")]: {
+      minWidth: 287,
+      minHeight: 275,
+      width: "90%",
+    },
   },
   secondCard: {
     borderRadius: 12,
     textAlign: "center",
     minWidth: 500,
     marginLeft: "15px",
+    [theme.breakpoints.down('1050')]: {
+      minWidth: 400,
+      minHeight: 275,
+      marginTop: "5vh",
+      marginLeft: 0,
+    },
+    [theme.breakpoints.down("xs")]: {
+      minWidth: 287,
+      minHeight: 275,
+      width: "80%",
+    },
   },
   cardHeader: {
     textAlign: "center",
@@ -36,6 +63,10 @@ const styles = theme => ({
   large: {
     width: theme.spacing(40),
     height: theme.spacing(40),
+    [theme.breakpoints.down('xs')]: {
+      width: theme.spacing(25),
+      height: theme.spacing(25),
+    },
   },
   input: {
     display: "none",

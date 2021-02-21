@@ -7,6 +7,10 @@ const styles = theme => ({
     "& > *": {
       margin: theme.spacing(1),
     },
+    [theme.breakpoints.down('xs')]: {
+      alignItems: "center",
+      flexDirection: "column",
+    },
   },
   input: {
     display: "none",
@@ -15,6 +19,9 @@ const styles = theme => ({
     margin: theme.spacing(1),
     minWidth: 180,
     maxWidth: 300,
+    [theme.breakpoints.down('xs')]: {
+      width: "100%"
+    },
   },
 });
 

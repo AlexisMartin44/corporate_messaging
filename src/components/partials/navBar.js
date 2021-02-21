@@ -48,12 +48,6 @@ const useStyles = theme => ({
   button: {
     marginBottom: "5px"
   },
-  appbar: {
-    maxHeight: "10vh",
-  },
-  toolbar: {
-    maxHeight: "100%",
-  }
 });
 
 class NavBar extends React.Component {
