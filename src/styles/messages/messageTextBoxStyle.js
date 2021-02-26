@@ -7,16 +7,18 @@ const styles = theme => ({
     },
   },
   chatTextBoxContainer: {
-    position: "absolute",
-    bottom: "90px",
-    left: "400px",
+    position: "relative",
+    bottom: "40px",
+    left: "20%",
     boxSizing: "border-box",
     overflow: "auto",
-    width: "calc(100% - 500px)",
+    width: "80%",
+    display: "flex",
+    justifyContent: "center"
   },
 
   chatTextBox: {
-    width: "calc(100% - 25px)",
+    width: "calc(100% - 20%)",
   },
 });
 

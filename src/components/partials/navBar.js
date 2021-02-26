@@ -15,6 +15,12 @@ import firebase from "firebase";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 
+
+/**
+ * @function
+ * @desc Styles of NavBar
+ * @param {*} theme 
+ */
 const useStyles = theme => ({
   root: {
     flexGrow: 1,
@@ -22,6 +28,16 @@ const useStyles = theme => ({
     top: "0",
     left: "0",
     width: "100%",
+    minHeight: "64px",
+  },
+  appBar: {
+    minHeight: "64px",
+  },
+  box: {
+    padding: "48px",
+    [theme.breakpoints.down(540)]: {
+      padding: 0,
+    },
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -36,7 +52,12 @@ const useStyles = theme => ({
   },
   typoDiv: {
     margin: "10px",
-    width: "250px"
+    width: "250px",
+  },
+  typo: {
+    [theme.breakpoints.down(540)]: {
+      fontSize: "10px",
+    },
   },
   buttonDiv: {
     margin: "5px",
@@ -45,11 +66,21 @@ const useStyles = theme => ({
     flexDirection: "column",
     justifySelf: "end"
   },
-  button: {
+  margin: {
     marginBottom: "5px"
   },
+  button: {
+    [theme.breakpoints.down(540)]: {
+      width: "10px",
+      fontSize: "10px",
+    },
+  }
 });
 
+/** 
+ * @classdesc Application navigation bar, allows to log out, and to see the registration requests if the logged-in user is an admin 
+ * @class
+ * @extends React.Component  */
 class NavBar extends React.Component {
 
 
@@ -57,7 +88,7 @@ class NavBar extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="static" className={classes.appbar}>
+        <AppBar position="static" className={classes.appBar}>
           <Toolbar className={classes.toolbar}>
             <Typography variant="h6" className={classes.title}>
               Corporate Messaging
@@ -68,7 +99,6 @@ class NavBar extends React.Component {
                   <PopupState variant="popover" popuId="popApplications">
                     {(popupState) => (
                       <div>
-
                         <IconButton aria-label="show notifications" color="inherit" {...bindTrigger(popupState)}>
                           <Badge badgeContent={this.props.applicationRequests.length} color="secondary">
                             <NotificationsIcon />
@@ -85,20 +115,20 @@ class NavBar extends React.Component {
                             horizontal: 'center',
                           }}
                         >
-                          <Box p={6}>
+                          <Box className={classes.box}>
                             {this.props.applicationRequests.map((application, _index) => {
                               return (
                                 <div key={_index}>
                                   <Paper className={classes.paper}>
                                     <div className={classes.typoDiv}>
-                                      <Typography variant="button">{application.email}</Typography>
-                                      <Typography variant="caption" display="block">{application.firstName} {application.lastName}</Typography>
-                                      <Typography variant="caption" display="block">{application.service}</Typography>
-                                      <Typography variant="caption" display="block">{application.position}</Typography>
+                                      <Typography className={classes.typo} variant="button">{application.email}</Typography>
+                                      <Typography className={classes.typo} variant="caption" display="block">{application.firstName} {application.lastName}</Typography>
+                                      <Typography className={classes.typo} variant="caption" display="block">{application.service}</Typography>
+                                      <Typography className={classes.typo} variant="caption" display="block">{application.position}</Typography>
                                     </div>
                                     <div className={classes.buttonDiv}>
-                                      <Button onClick={this.addApplication.bind(this, application)} className={classes.button} variant="contained" color="primary">Accept</Button>
-                                      <Button onClick={this.deleteApplication.bind(this, application)} variant="contained" color="secondary">Decline</Button>
+                                      <Button onClick={this.addApplication.bind(this, application)} className={[classes.margin, classes.button].join(' ')} variant="contained" color="primary">Accept</Button>
+                                      <Button onClick={this.deleteApplication.bind(this, application)} className={classes.button} variant="contained" color="secondary">Decline</Button>
                                     </div>
                                   </Paper>
                                 </div>

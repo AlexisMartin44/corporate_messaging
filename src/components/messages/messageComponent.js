@@ -36,9 +36,10 @@ class MessageComponent extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     if (this.state.email) {
       return (
-        <div className="dashboard-container" id="dashboard-container">
+        <div className={classes.root} id="dashboard-container">
           <MessageList
             users={this.state.users}
             history={this.props.history}
@@ -49,10 +50,12 @@ class MessageComponent extends React.Component {
             newChatBtnFn={this.newChatBtnClicked}
             setUserToShow={this.setUserToShow}
           ></MessageList>
-          {this.state.newChatFormVisible ? null : (
+          {this.state.newChatFormVisible == true || this.state.userVisible == true ? null : (
             <MessageView
               user={this.state.email}
-              chat={this.state.chats[this.state.selectedChat]}
+              chat={this.state.chats.sort((a, b) => {
+                return b.messages[b.messages.length - 1].timestamp - a.messages[a.messages.length - 1].timestamp;
+              })[this.state.selectedChat]}
             ></MessageView>
           )}
           {
@@ -81,7 +84,7 @@ class MessageComponent extends React.Component {
 
   //signOut = () => firebase.auth().signOut();
 
-  submitMessage = msg => {
+  submitMessage = async msg => {
     const docKey = this.buildDocKey(
       this.state.chats[this.state.selectedChat].users.filter(
         _usr => _usr !== this.state.email
@@ -99,6 +102,7 @@ class MessageComponent extends React.Component {
         }),
         receiverHasRead: false,
       });
+    await this.setState({ selectedChat: 0 });
   };
 
   //   // Always in alphabetical order:
@@ -119,13 +123,14 @@ class MessageComponent extends React.Component {
           {
             message: chatObj.message,
             sender: this.state.email,
+            timestamp: Date.now(),
           },
         ],
         users: [this.state.email, chatObj.sendTo],
         receiverHasRead: false,
       });
     this.setState({ newChatFormVisible: false });
-    this.selectChat(this.state.chats.length - 1);
+    this.selectChat(0);
   };
 
   selectChat = async chatIndex => {

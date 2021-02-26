@@ -17,13 +17,24 @@ function createData(name, date, url) {
 }
 
 function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
+  if (typeof a[orderBy] == "string" && typeof b[orderBy] == "string") {
+    if (b[orderBy].toLowerCase() < a[orderBy].toLowerCase()) {
+      return -1;
+    }
+    if (b[orderBy].toLowerCase() > a[orderBy].toLowerCase()) {
+      return 1;
+    }
+    return 0;
   }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
+  else {
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
   }
-  return 0;
 }
 
 function getComparator(order, orderBy) {
@@ -88,6 +99,10 @@ function EnhancedTableHead(props) {
   );
 }
 
+/** 
+ * @classdesc DocumentTable component, displays files in Tab component
+ * @class
+ * @extends React.Component  */
 class DocumentTableComponent extends React.Component {
   constructor(props) {
     super();
@@ -108,10 +123,9 @@ class DocumentTableComponent extends React.Component {
   render() {
     const { classes } = this.props;
     const rows = this.state.files.map(file => {
-      const date = new Date(file.date);
       return createData(
         file.name,
-        date.toLocaleString(),
+        file.date,
         <Button variant="contained" color="secondary" href={file.url}>
           Open
         </Button>
@@ -171,6 +185,7 @@ class DocumentTableComponent extends React.Component {
                     )
                     .map((row, index) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
+                      const date = new Date(row.date);
 
                       return (
                         <TableRow hover tabIndex={-1} key={row.name}>
@@ -182,7 +197,7 @@ class DocumentTableComponent extends React.Component {
                           >
                             {row.name}
                           </TableCell>
-                          <TableCell align="center">{row.date}</TableCell>
+                          <TableCell align="center">{date.toLocaleString()}</TableCell>
                           <TableCell align="center">{row.url}</TableCell>
                         </TableRow>
                       );
@@ -211,4 +226,5 @@ class DocumentTableComponent extends React.Component {
   }
 }
 
+//export the component with his styles
 export default withStyles(styles)(DocumentTableComponent);

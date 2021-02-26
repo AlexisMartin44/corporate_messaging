@@ -195,4 +195,5 @@ class DocumentImportComponent extends React.Component {
   }
 }
 
+//export the component with his styles
 export default withStyles(styles)(DocumentImportComponent);

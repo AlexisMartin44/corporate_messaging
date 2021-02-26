@@ -5,6 +5,10 @@ import firebase from "firebase";
 import "firebase/storage";
 import { Avatar, Button, Typography, Card, CardHeader, Divider, CardContent } from "@material-ui/core";
 
+/** 
+ * @classdesc Profile component, displays user information in parameter
+ * @class
+ * @extends React.Component  */
 class ProfileComponent extends React.Component {
   constructor(props) {
     super();
@@ -17,7 +21,11 @@ class ProfileComponent extends React.Component {
   }
 
 
-
+  /**
+   * @desc Update state
+   * @param {Object} files - Files that have been load from database
+   * @function
+   */
   handleChange = async files => {
     await this.setState({
       files: files,
@@ -25,6 +33,10 @@ class ProfileComponent extends React.Component {
     this.handleSave();
   };
 
+  /**
+   * @function
+   * @desc Change profile image
+   */
   handleSave = () => {
     let bucketName = "image";
     let file = this.state.files[0];
@@ -42,6 +54,7 @@ class ProfileComponent extends React.Component {
         console.log(error);
       },
       async () => {
+        //Stores the image in the database and updates the user's profile
         await firebase
           .storage()
           .ref("image")
@@ -61,19 +74,22 @@ class ProfileComponent extends React.Component {
     );
   };
 
+  /**
+   * @function
+   */
   render() {
     const { classes } = this.props;
     const date = new Date(this.props.userData.date);
     return (
       <div className={this.props.toShow ? classes.rootToShow : classes.root}>
-        <Card className={classes.card}>
+        <Card className={this.props.toShow ? classes.cardToShow : classes.card}>
           <CardHeader title="Profile" className={classes.cardHeader} />
           <Divider variant="middle" />
           <CardContent className={classes.cardContent}>
             {this.props.userData.isAdmin ? <Typography variant="h5" className={classes.typo}>Admin</Typography> : <div></div>}
             {this.props.toShow ? <Avatar
               src={this.props.userData.image}
-              className={classes.large}
+              className={classes.largeToShow}
             /> : <div><input
               accept="image/*"
               className={classes.input}
@@ -94,7 +110,7 @@ class ProfileComponent extends React.Component {
             <Typography className={classes.typo} variant="h4">{this.props.userData.firstName} {this.props.userData.lastName}</Typography>
           </CardContent>
         </Card>
-        <Card className={classes.secondCard}>
+        <Card className={this.props.toShow ? classes.secondCardToShow : classes.secondCard}>
           <CardHeader title="Information" className={classes.cardHeader} />
           <Divider variant="middle" />
           <CardContent>
@@ -127,8 +143,13 @@ class ProfileComponent extends React.Component {
     );
   }
 
+  /**
+   * @desc Update the state with the values from the database
+   * @function
+   */
   componentDidMount = () => {
     if (this.props.userData) {
+      //Retrieves messages
       firebase
         .firestore()
         .collection("chats")
@@ -139,6 +160,7 @@ class ProfileComponent extends React.Component {
             chatsLength: chats.length,
           });
         });
+      //Retrieves services files
       firebase
         .firestore()
         .collection("files")
@@ -146,6 +168,7 @@ class ProfileComponent extends React.Component {
         .onSnapshot(async res => {
           await this.setState({ serviceLength: res.docs.map(_doc => _doc.data()).length });
         });
+      //Retrieves position files
       firebase
         .firestore()
         .collection("files")
@@ -157,4 +180,5 @@ class ProfileComponent extends React.Component {
   }
 }
 
+//export the component with his styles
 export default withStyles(styles)(ProfileComponent);

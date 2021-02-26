@@ -10,9 +10,14 @@ import NavBar from "../partials/navBar";
 import DocumentComponent from "../documents/documents";
 import ProfileComponent from "./profile";
 
+/** 
+ * @classdesc Main component of the application, mother component of the other components
+ * @class
+ * @extends React.Component  */
 class DashboardComponent extends React.Component {
   constructor() {
     super();
+    /** State that contains all chats, the data of the logged-in user, the tab displayed, and registration requests */
     this.state = {
       chats: [],
       value: 0,
@@ -20,13 +25,27 @@ class DashboardComponent extends React.Component {
       applicationRequests: [],
     };
   }
+
+  /** 
+   * Render method of DashboardComponent
+   * @method
+   */
   render() {
+    // Styles classes
     const { classes } = this.props;
 
+    /**
+     * @desc Causes a change of tab and thus of the displayed daughter component
+     * @param {event} event
+     * @param {int} newValue - The value of the tab to be displayed
+     * @method */
     const handleChange = (event, newValue) => {
       this.setState({ value: newValue });
     };
+
     return (
+      //Depending on the value of the state, displays different components
+      //The Paper component corresponds to the tab at the bottom to changes the component page
       <div>
         {this.state.value === 0 && (
           <MessageComponent history={this.props.history} />
@@ -63,9 +82,15 @@ class DashboardComponent extends React.Component {
     );
   }
 
+  /**
+   * @function
+   * @desc gets invoked right after a React component has been mounted, allows to update the state
+   */
   componentDidMount = async () => {
     firebase.auth().onAuthStateChanged(async _usr => {
+      //if a user is logged-in
       if (_usr) {
+        //This first call allows to load the data of the connected user
         await firebase
           .firestore()
           .collection("users")
@@ -78,11 +103,14 @@ class DashboardComponent extends React.Component {
                 break;
               }
             }
+
+            //Update the state
             await this.setState({
               userData: userData,
               friends: [],
             });
 
+            //If the user is an admin, the registration requests are uploaded
             if (userData.isAdmin) {
               await firebase
                 .firestore()
@@ -101,4 +129,5 @@ class DashboardComponent extends React.Component {
   };
 }
 
+//export the component with his styles
 export default withStyles(styles)(DashboardComponent);

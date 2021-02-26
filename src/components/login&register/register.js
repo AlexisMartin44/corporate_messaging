@@ -5,7 +5,7 @@ import useStyles from "../../styles/login&register/registerStyle";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Copyright from "./../partials/copyright";
 import withStyles from "@material-ui/core/styles/withStyles";
-
+import joi from "joi";
 import {
   Avatar,
   TextField,
@@ -18,12 +18,29 @@ import {
   Checkbox,
   Box,
 } from "@material-ui/core";
-import { FlashAuto } from "@material-ui/icons";
 
+require("joi");
+//Joi schema that allows to validate inputs values
+const schema = joi.object().keys({
+  email: joi.string().email({ tlds: { allow: false } }).min(3).max(45).required(),
+  service: joi.string().min(3).max(45).required(),
+  position: joi.string().min(3).max(45).required(),
+  firstName: joi.string().min(3).max(45).required(),
+  lastName: joi.string().min(3).max(45).required(),
+  password: joi.string().regex(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,25})$/).required(),
+  date: joi.any().required(),
+});
+
+/** 
+ * @classdesc Register component, allows to send a register request to admins
+ * @class
+ * @extends React.Component  */
 class RegisterComponent extends React.Component {
   constructor() {
     super();
-
+    /**
+     * State that contains input values
+     */
     this.state = {
       email: null,
       firstName: null,
@@ -36,9 +53,9 @@ class RegisterComponent extends React.Component {
     };
   }
 
-  //CssBaseline allows to style by default <html> and <body> with UI material styles
-  //Paper is used to give the appearance of a card that emerges from the screen
+  /** Render method of RegisterComponent */
   render() {
+
     const { classes } = this.props;
     return (
       <Container component="main" maxWidth="xs">
@@ -52,7 +69,7 @@ class RegisterComponent extends React.Component {
           </Typography>
           <form
             className={classes.form}
-            onSubmit={e => this.submitSignup(e, this.state)}
+            onSubmit={e => this.submitSignup(e)}
           >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -142,14 +159,11 @@ class RegisterComponent extends React.Component {
                   onChange={e => this.userTyping("passwordConfirmation", e)}
                 />
               </Grid>
+
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I have read and agree with the privacy policy."
-                />
+                <Typography className={classes.typo} variant="subtitle1" color="secondary">{this.state.signupError}</Typography>
               </Grid>
+
             </Grid>
             <Button
               type="submit"
@@ -176,6 +190,11 @@ class RegisterComponent extends React.Component {
     );
   }
 
+  /**
+   * Update the state with the values entered
+   * @param {string} whichInput - Select the value of the state to update
+   * @param {event} event 
+   */
   userTyping = (whichInput, event) => {
     switch (whichInput) {
       case "email":
@@ -211,20 +230,20 @@ class RegisterComponent extends React.Component {
     }
   };
 
-  formIsValid = () => this.state.password === this.state.passwordConfirmation;
-
-  submitSignup = async (e, state) => {
+  /**
+   * Allows to send the registration request to the database
+   * @function
+   * @param {event} e
+   */
+  submitSignup = async (e) => {
     e.preventDefault(); // This is to prevent the automatic refreshing of the page on submit.
-    if (!this.formIsValid()) {
+    if (!(this.state.password === this.state.passwordConfirmation)) {
       this.setState({ signupError: "Passwords do not match" });
       return;
     }
 
-    await firebase
-      .firestore()
-      .collection("applicationRequest")
-      .doc(this.state.email)
-      .set({
+    try {
+      const dataToValidate = {
         email: this.state.email,
         service: this.state.service,
         position: this.state.position,
@@ -232,10 +251,27 @@ class RegisterComponent extends React.Component {
         lastName: this.state.lastName,
         password: this.state.password,
         date: Date.now(),
-      })
-      .then(() => {
-        this.props.history.push("/login");
-      });
+      }
+      //Check is data is valid
+      const result = schema.validate(dataToValidate);
+      if (result.error) {
+        throw result.error.details[0].message;
+      }
+
+      //Retrieves registration requests
+      await firebase
+        .firestore()
+        .collection("applicationRequest")
+        .doc(this.state.email)
+        .set(dataToValidate)
+        .then(() => {
+          this.props.history.push("/login");
+        });
+    }
+    catch (e) {
+      this.setState({ signupError: e });
+    }
+
   };
 }
 

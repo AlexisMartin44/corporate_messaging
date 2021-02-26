@@ -19,7 +19,7 @@ class MessageView extends React.Component {
       return <main className={classes.content}></main>;
     } else if (this.props.chat !== undefined) {
       return (
-        <div>
+        <div className={classes.root}>
           <div className={classes.chatHeader}>
             Your conversation with{" "}
             {this.props.chat.users.filter(_usr => _usr !== this.props.user)[0]}

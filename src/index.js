@@ -23,7 +23,6 @@ firebase.initializeApp({
 });
 
 
-
 const routing = (
   <ThemeProvider theme={theme}>
     <BrowserRouter>

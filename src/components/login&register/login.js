@@ -19,6 +19,10 @@ import {
   Box,
 } from "@material-ui/core";
 
+/** 
+ * @classdesc Login component with email and password
+ * @class
+ * @extends React.Component  */
 class LoginComponent extends React.Component {
   constructor() {
     super();
@@ -30,8 +34,7 @@ class LoginComponent extends React.Component {
     };
   }
 
-  //CssBaseline allows to style by default <html> and <body> with UI material styles
-  //Paper is used to give the appearance of a card that emerges from the screen
+  /** Render method of LoginComponent */
   render() {
     const { classes } = this.props;
     return (
@@ -106,6 +109,11 @@ class LoginComponent extends React.Component {
     );
   }
 
+  /** 
+   * Update the state when an input has a new value
+   * @function 
+   * @param {string} whichInput - Name of the state to update
+   */
   userTyping = (whichInput, event) => {
     switch (whichInput) {
       case "email":
@@ -121,9 +129,14 @@ class LoginComponent extends React.Component {
     }
   };
 
+  /**
+   * @param {event} e
+   * @desc Submit the login
+  */
   submitLogin = async e => {
     e.preventDefault(); // This is to prevent the automatic refreshing of the page on submit.
 
+    //Sends a database connection request
     await firebase
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)

@@ -6,15 +6,24 @@ import DocumentTableComponent from "./documentTable";
 import firebase from "firebase";
 import { Typography } from "@material-ui/core";
 
+/** 
+ * @classdesc Document component, displays files
+ * @class
+ * @extends React.Component  */
 class DocumentComponent extends React.Component {
   constructor(props) {
     super();
+    //State with files concerning the connected user
     this.state = {
       serviceFiles: [],
       positionFiles: [],
     };
   }
 
+  /**
+   * @desc Update the state with the values from the database
+   * @function
+   */
   componentDidMount = async () => {
     await firebase
       .firestore()
@@ -32,6 +41,7 @@ class DocumentComponent extends React.Component {
       });
   };
 
+  //Render method of Document component
   render() {
     const { classes } = this.props;
     return (
@@ -57,4 +67,5 @@ class DocumentComponent extends React.Component {
   }
 }
 
+//export the component with his styles
 export default withStyles(styles)(DocumentComponent);
