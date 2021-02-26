@@ -9,11 +9,17 @@ import {
   IconButton,
   Popover,
   Box,
-  Paper
+  Paper,
+  Snackbar,
 } from "@material-ui/core";
+import MuiAlert from '@material-ui/lab/Alert';
 import firebase from "firebase";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 
 /**
@@ -74,7 +80,14 @@ const useStyles = theme => ({
       width: "10px",
       fontSize: "10px",
     },
-  }
+  },
+  snackbar: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
+
 });
 
 /** 
@@ -83,7 +96,16 @@ const useStyles = theme => ({
  * @param {Object} applicationRequests - List of registration requests
  * @extends React.Component  */
 class NavBar extends React.Component {
-
+  constructor() {
+    super();
+    /** State that contains Snackbars properties */
+    this.state = {
+      openError: false,
+      openSuccess: false,
+      signupError: "",
+      signupSuccess: "",
+    };
+  }
 
   render() {
     //Style classes
@@ -154,6 +176,18 @@ class NavBar extends React.Component {
             </Button>
           </Toolbar>
         </AppBar>
+        <div className={classes.snackbar}>
+          <Snackbar open={this.state.openSuccess} autoHideDuration={6000} onClose={this.handleCloseSuccess}>
+            <Alert onClose={this.handleCloseSuccess} severity="success">
+              {this.state.signupSuccess}
+            </Alert>
+          </Snackbar>
+          <Snackbar open={this.state.openError} autoHideDuration={6000} onClose={this.handleCloseError}>
+            <Alert onClose={this.handleCloseError} severity="error">
+              {this.state.signupError}
+            </Alert>
+          </Snackbar>
+        </div>
       </div >
     );
   }
@@ -169,7 +203,22 @@ class NavBar extends React.Component {
       .collection("applicationRequest")
       .doc(application.email)
       .delete();
+    await this.setState({ signupSuccess: "User successfully deleted !", openSuccess: true })
   };
+
+  handleCloseSuccess = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    this.setState({ openSuccess: false });
+  }
+
+  handleCloseError = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    this.setState({ openError: false });
+  }
 
   /**
    * @desc Add an application request
@@ -217,14 +266,18 @@ class NavBar extends React.Component {
                   .delete();
                 secondaryApp.auth().signOut();
                 secondaryApp.delete();
+                await this.setState({ signupSuccess: "User successfully added !", openSuccess: true });
+                console.log(this.state.signupSuccess, this.state.openSuccess);
               },
               dbErr => {
+                this.setState({ openError: true });
                 console.log("Failed to add user to the database: ", dbErr);
                 this.setState({ signupError: "Failed to add user" });
               }
             );
         },
         authErr => {
+          this.setState({ openError: true });
           console.log("Failed to create user: ", authErr);
           this.setState({ signupError: "Failed to add user" });
         }

@@ -12,12 +12,15 @@ import {
   ListItemIcon,
   AppBar,
   Toolbar,
-  TextField
+  TextField,
+  IconButton
 } from "@material-ui/core";
 import styles from "../../styles/messages/messageListStyle";
 import NotificationImportant from "@material-ui/icons/NotificationImportant";
 import Autocomplete, { createFilterOptions } from "@material-ui/lab/Autocomplete";
 import { UserComponent } from "./userSearch";
+import EventIcon from '@material-ui/icons/Event';
+import SortByAlphaIcon from '@material-ui/icons/SortByAlpha';
 
 class MessageList extends React.Component {
 
@@ -26,6 +29,7 @@ class MessageList extends React.Component {
     this.state = {
       searchValue: "",
       userToShow: null,
+      filterDate: false,
     };
   }
 
@@ -38,9 +42,12 @@ class MessageList extends React.Component {
     this.props.setUserToShow(user);
   }
 
+  handleIconClick = () => {
+    this.props.changeFilter();
+  }
+
   render() {
     const { classes } = this.props;
-
     return (
       <div className={classes.root}>
         <AppBar position="static" className={classes.appbar}>
@@ -59,13 +66,19 @@ class MessageList extends React.Component {
                 <UserComponent newChat={this.newChat} user={option} setUserToShow={this.setUserToShow} />
               )}
             />
+            <IconButton onClick={this.handleIconClick} color="white" component="span">
+              {this.props.filterDate ? <SortByAlphaIcon /> : <EventIcon />}
+            </IconButton>
           </Toolbar>
         </AppBar>
 
         {this.props.chats.length > 0 ? <List>
           {this.props.chats
             .sort((a, b) => {
-              return b.messages[b.messages.length - 1].timestamp - a.messages[a.messages.length - 1].timestamp;
+              if (this.props.filterDate == true)
+                return b.messages[b.messages.length - 1].timestamp - a.messages[a.messages.length - 1].timestamp;
+
+              return a.users.filter(_user => _user !== this.props.userEmail)[0].localeCompare(b.users.filter(_user => _user !== this.props.userEmail)[0]);
             })
             .map((_chat, _index) => {
               return (

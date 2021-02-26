@@ -62,11 +62,6 @@ class DashboardComponent extends React.Component {
           this.state.value === 2 && (
             <ProfileComponent toShow={false} userData={this.state.userData} />
           )}
-        {/* NavBar at the top of the screen, allows you to log out and see the applications requests if the user is an admin.  */}
-        <NavBar
-          history={this.props.history}
-          applicationRequests={this.state.applicationRequests}
-        />
         {/* Tabs at the bottom of the screen, allows to change the daughter component, so change tabs */}
         <Paper square className={classes.root}>
           <Tabs
@@ -82,6 +77,11 @@ class DashboardComponent extends React.Component {
             <Tab icon={<PersonPinIcon />} label="Profile" />
           </Tabs>
         </Paper>
+        {/* NavBar at the top of the screen, allows you to log out and see the applications requests if the user is an admin.  */}
+        <NavBar
+          history={this.props.history}
+          applicationRequests={this.state.applicationRequests}
+        />
       </div>
     );
   }

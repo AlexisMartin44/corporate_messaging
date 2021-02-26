@@ -30,6 +30,9 @@ const useStyles = theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  typo: {
+    textAlign: "center",
+  }
 });
 
 export default useStyles;

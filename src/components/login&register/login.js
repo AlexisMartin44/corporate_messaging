@@ -78,10 +78,9 @@ class LoginComponent extends React.Component {
                 autoComplete="password"
                 onChange={e => this.userTyping("password", e)}
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
+              {
+                this.state.loginError ? <Typography className={classes.typo} variant="subtitle1" color="secondary">Wrong email or password</Typography> : null
+              }
               <Button
                 type="submit"
                 fullWidth
@@ -149,7 +148,7 @@ class LoginComponent extends React.Component {
           this.props.history.push("/dashboard");
         },
         err => {
-          this.setState({ serverError: true });
+          this.setState({ loginError: true });
           console.log("Error logging in: ", err);
         }
       );

@@ -12,6 +12,7 @@ class MessageComponent extends React.Component {
   constructor() {
     super();
     this.state = {
+      filterDate: false,
       selectedChat: null,
       newChatFormVisible: false,
       email: null,
@@ -27,12 +28,21 @@ class MessageComponent extends React.Component {
     await this.setState({ userToShow: user, userVisible: true, newChatFormVisible: false, selectedChat: null });
   }
 
+  changeFilter = () => {
+    if (this.state.filterDate == true)
+      this.setState({ filterDate: false });
+    else
+      this.setState({ filterDate: true });
+  }
+
   render() {
     const { classes } = this.props;
     if (this.state.email) {
       return (
         <div className={classes.root} id="dashboard-container">
           <MessageList
+            changeFilter={this.changeFilter}
+            filterDate={this.state.filterDate}
             users={this.state.users}
             history={this.props.history}
             userEmail={this.state.email}
@@ -46,9 +56,7 @@ class MessageComponent extends React.Component {
             (
               <MessageView
                 user={this.state.email}
-                chat={this.state.chats.sort((a, b) => {
-                  return b.messages[b.messages.length - 1].timestamp - a.messages[a.messages.length - 1].timestamp;
-                })[this.state.selectedChat]}
+                chat={this.state.chats[this.state.selectedChat]}
               ></MessageView>
             ) : null}
           {
@@ -95,7 +103,8 @@ class MessageComponent extends React.Component {
         }),
         receiverHasRead: false,
       });
-    await this.setState({ selectedChat: 0 });
+    if (this.state.filterDate)
+      await this.setState({ selectedChat: 0 });
   };
 
   //   // Always in alphabetical order:
@@ -123,7 +132,8 @@ class MessageComponent extends React.Component {
         receiverHasRead: false,
       });
     this.setState({ newChatFormVisible: false });
-    this.selectChat(0);
+    if (this.state.filterDate == true)
+      this.selectChat(0);
   };
 
   selectChat = async chatIndex => {

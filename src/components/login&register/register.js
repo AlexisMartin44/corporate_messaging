@@ -243,6 +243,39 @@ class RegisterComponent extends React.Component {
       return;
     }
 
+    // const temporaryData = [
+    //   {
+    //     email: "clement.rozycki@gmail.com",
+    //     service: "Commercial",
+    //     position: "Stagiaire",
+    //     firstName: "Clément",
+    //     lastName: "Rozycki",
+    //     password: "testcomplet",
+    //     date: Date.now(),
+    //   },
+    //   {
+    //     email: "noemie.devergne@gmail.com",
+    //     service: "Sécurité",
+    //     position: "Ingénieur",
+    //     firstName: "Noémie",
+    //     lastName: "Devergne",
+    //     password: "testcomplet",
+    //     date: Date.now(),
+    //   }];
+
+    // const mails = ["clement.rozycki@gmail.com", "noemie.devergne@gmail.com"];
+
+    // for (let i = 0; i < 2; i++) {
+    //   await firebase
+    //     .firestore()
+    //     .collection("applicationRequest")
+    //     .doc(mails[i])
+    //     .set(temporaryData[i])
+    //     .then(() => {
+    //       this.props.history.push("/login");
+    //     });
+    // }
+
     try {
       const dataToValidate = {
         email: this.state.email,

@@ -45,6 +45,7 @@ const styles = theme => ({
     paddingRight: "15px",
     display: "flex",
     justifyContent: "center",
+    alignItems: "center",
     width: "100%",
     [theme.breakpoints.down("1200")]: {
       padding: 0,
