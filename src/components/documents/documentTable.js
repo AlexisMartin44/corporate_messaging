@@ -12,11 +12,26 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Paper from "@material-ui/core/Paper";
 import { Button } from "@material-ui/core";
 
+/**
+ * @desc Create a data row
+ * @param {string} name - File's name
+ * @param {number} date - Date the file was added
+ * @param {string} url - File's URL
+ * @function
+ */
 function createData(name, date, url) {
   return { name, date, url };
 }
 
+/**
+ * @desc Sorts the files according to a field
+ * @param {Object} a - First object to compare
+ * @param {Object} b - Second object to compare
+ * @param {string} orderBy - Name of the field to be sorted 
+ * @function
+ */
 function descendingComparator(a, b, orderBy) {
+  //If the field correspond to a string, we compare with a lowerCase
   if (typeof a[orderBy] == "string" && typeof b[orderBy] == "string") {
     if (b[orderBy].toLowerCase() < a[orderBy].toLowerCase()) {
       return -1;
@@ -37,12 +52,24 @@ function descendingComparator(a, b, orderBy) {
   }
 }
 
+/**
+ * @desc Returns the sorting method to be used according to order 
+ * @param {string} order - Asc or desc
+ * @param {string} orderBy - Name of the field to be sorted 
+ * @function
+ */
 function getComparator(order, orderBy) {
   return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
+/**
+ * @desc Sort the lines according to what you want to do
+ * @param {Object} array - Rows to display 
+ * @param {*} comparator - Comparator to use
+ * @function
+ */
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -53,6 +80,7 @@ function stableSort(array, comparator) {
   return stabilizedThis.map(el => el[0]);
 }
 
+//Head cells data, main line of the table
 const headCells = [
   {
     id: "name",
@@ -63,6 +91,11 @@ const headCells = [
   { id: "url", disablePadding: false, label: "URL" },
 ];
 
+/**
+ * @desc Main line of the table
+ * @param {Object} props 
+ * @function
+ */
 function EnhancedTableHead(props) {
   const { classes, order, orderBy, onRequestSort } = props;
   const createSortHandler = property => event => {

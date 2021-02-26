@@ -26,7 +26,7 @@ import {
 class LoginComponent extends React.Component {
   constructor() {
     super();
-
+    //State that contains email and password
     this.state = {
       email: null,
       password: null,
@@ -34,8 +34,12 @@ class LoginComponent extends React.Component {
     };
   }
 
-  /** Render method of LoginComponent */
+  /** 
+   * @desc Render method of LoginComponent
+   * @function
+   */
   render() {
+    //Styles classes
     const { classes } = this.props;
     return (
       <Grid container component="main" className={classes.root}>

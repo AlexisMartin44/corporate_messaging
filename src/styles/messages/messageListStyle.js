@@ -45,6 +45,15 @@ const styles = theme => ({
     paddingRight: "15px",
     display: "flex",
     justifyContent: "center",
+    width: "100%",
+    [theme.breakpoints.down("1200")]: {
+      padding: 0,
+    },
+  },
+  appbar: {
+    [theme.breakpoints.down("1200")]: {
+      width: "500%",
+    },
   },
   autocomplete: {
     width: "80%",

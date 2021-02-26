@@ -1,23 +1,21 @@
 const styles = theme => ({
   main: {
-    width: "auto",
-    display: "block", // Fix IE 11 issue.
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
-    [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-      width: 400,
-      marginLeft: "auto",
-      marginRight: "auto",
-    },
+    position: "absolute",
+    top: 0,
+    right: 0,
+    height: "100%",
+    width: "80%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   paper: {
-    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${
-      theme.spacing.unit * 3
-    }px`,
-    position: "absolute",
-    width: "350px",
-    top: "150px",
-    left: "calc(50% + 150px - 175px)",
+    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3
+      }px`,
+    width: "40%",
+    [theme.breakpoints.down("900")]: {
+      width: "80%",
+    },
   },
   input: {},
   form: {

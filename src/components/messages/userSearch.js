@@ -9,7 +9,7 @@ import { useTutorInfoStyles } from '@mui-treasury/styles/info/tutor';
 import { useSizedIconButtonStyles } from '@mui-treasury/styles/iconButton/sized';
 import { useDynamicAvatarStyles } from '@mui-treasury/styles/avatar/dynamic';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     action: {
         backgroundColor: '#fff',
         boxShadow: '0 1px 4px 0 rgba(0,0,0,0.12)',
@@ -19,9 +19,32 @@ const useStyles = makeStyles(() => ({
         },
     },
     row: {
-        minWidth: "98%",
+        [theme.breakpoints.down("xs")]: {
+            minWidth: "98%",
+        },
+        minWidth: "50%",
+        margin: "auto",
         display: "flex",
-        alignItems: "center"
+        justifyContent: "space-evenly",
+        alignItems: "center",
+    },
+    info: {
+        maxWidth: "100px",
+        [theme.breakpoints.up("1200")]: {
+            maxWidth: "3vw",
+        },
+    },
+    infoTitle: {
+        [theme.breakpoints.up("1200")]: {
+            fontSize: "0.75vw",
+        },
+
+    },
+    infoSub: {
+        [theme.breakpoints.up("1200")]: {
+            fontSize: "0.5vw",
+        },
+
     }
 }));
 
@@ -37,7 +60,11 @@ const newMessage = props => {
 export const UserComponent = React.memo(function TutorCard(props) {
     const styles = useStyles();
     const iconBtnStyles = useSizedIconButtonStyles({ padding: 8 });
-    const avatarStyles = useDynamicAvatarStyles({ radius: 12, size: 48 });
+    const avatarStyles = useDynamicAvatarStyles((theme) => ({
+        radius: 12, [theme.breakpoints.up("1200")]: {
+            size: "3vw",
+        }
+    }));
     return (
         <Row p={0.5} gap={2} bgcolor={'#f5f5f5'} borderRadius={16} className={styles.row}>
             <Item onClick={handleClick.bind(this, props)}>
@@ -46,12 +73,12 @@ export const UserComponent = React.memo(function TutorCard(props) {
                     src={props.user.image}
                 />
             </Item>
-            <Info onClick={handleClick.bind(this, props)} position={'middle'} useStyles={useTutorInfoStyles}>
-                <InfoTitle>{props.user.firstName} {props.user.lastName}</InfoTitle>
-                <InfoSubtitle>{props.user.service}</InfoSubtitle>
-                <InfoSubtitle>{props.user.position}</InfoSubtitle>
+            <Info onClick={handleClick.bind(this, props)} position={'middle'} className={styles.info} useStyles={useTutorInfoStyles}>
+                <InfoTitle className={styles.infoTitle}>{props.user.firstName} {props.user.lastName}</InfoTitle>
+                <InfoSubtitle className={styles.infoSub}>{props.user.service}</InfoSubtitle>
+                <InfoSubtitle className={styles.infoSub}>{props.user.position}</InfoSubtitle>
             </Info>
-            <Item onClick={newMessage.bind(this, props)} mr={0.5} position={'middle'}>
+            <Item onClick={newMessage.bind(this, props)} className={styles.button} position={'middle'}>
                 <IconButton className={styles.action} classes={iconBtnStyles}>
                     <ChatIcon />
                 </IconButton>

@@ -8,14 +8,6 @@ import { Button, withStyles } from "@material-ui/core";
 import firebase from "firebase";
 import ProfileComponent from "../dashboard/profile";
 
-// I need to investigate why sometimes
-// two messages will send instead of just
-// one. I dont know if there are two instances
-// of the chat box component or what...
-
-// I will be using both .then and async/await
-// in this tutorial to give a feel of both.
-
 class MessageComponent extends React.Component {
   constructor() {
     super();
@@ -50,16 +42,17 @@ class MessageComponent extends React.Component {
             newChatBtnFn={this.newChatBtnClicked}
             setUserToShow={this.setUserToShow}
           ></MessageList>
-          {this.state.newChatFormVisible == true || this.state.userVisible == true ? null : (
-            <MessageView
-              user={this.state.email}
-              chat={this.state.chats.sort((a, b) => {
-                return b.messages[b.messages.length - 1].timestamp - a.messages[a.messages.length - 1].timestamp;
-              })[this.state.selectedChat]}
-            ></MessageView>
-          )}
+          {this.state.newChatFormVisible == true || this.state.userVisible == true ? null : this.state.selectedChat != null ?
+            (
+              <MessageView
+                user={this.state.email}
+                chat={this.state.chats.sort((a, b) => {
+                  return b.messages[b.messages.length - 1].timestamp - a.messages[a.messages.length - 1].timestamp;
+                })[this.state.selectedChat]}
+              ></MessageView>
+            ) : null}
           {
-            this.state.userVisible ? (<ProfileComponent toShow={true} userData={this.state.userToShow} />) : null
+            this.state.userVisible ? (<ProfileComponent newChatBtnFn={this.newChatBtnClicked} setUserToShow={this.setUserToShow} toShow={true} userData={this.state.userToShow} />) : null
           }
           {this.state.selectedChat !== null &&
             !this.state.newChatFormVisible ? (

@@ -30,6 +30,7 @@ class DocumentComponent extends React.Component {
       .collection("files")
       .where("services", "array-contains", this.props.service)
       .onSnapshot(async res => {
+        //Retrieves all files related to the service of the logged-in user
         this.setState({ serviceFiles: res.docs.map(_doc => _doc.data()) });
       });
     await firebase
@@ -37,6 +38,7 @@ class DocumentComponent extends React.Component {
       .collection("files")
       .where("position", "array-contains", this.props.position)
       .onSnapshot(async res => {
+        //Retrieves all files related to the position of the logged-in user
         this.setState({ positionFiles: res.docs.map(_doc => _doc.data()) });
       });
   };
@@ -46,8 +48,11 @@ class DocumentComponent extends React.Component {
     const { classes } = this.props;
     return (
       <div>
-        {this.props.isAdmin && <DocumentImportComponent />}
+        {//If the logged-in user is an admin, then he can import files
+          this.props.isAdmin && <DocumentImportComponent />}
         <div className={classes.center}>
+          {/* The component for displaying files in a table is called twice, the first time sending service files
+           as a parameter and the second time sending position files as a parameter. */}
           <Typography
             variant="h5"
             className={this.props.isAdmin ? classes.typo : classes.firstTypo}

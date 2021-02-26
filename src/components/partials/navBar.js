@@ -80,11 +80,13 @@ const useStyles = theme => ({
 /** 
  * @classdesc Application navigation bar, allows to log out, and to see the registration requests if the logged-in user is an admin 
  * @class
+ * @param {Object} applicationRequests - List of registration requests
  * @extends React.Component  */
 class NavBar extends React.Component {
 
 
   render() {
+    //Style classes
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -156,6 +158,11 @@ class NavBar extends React.Component {
     );
   }
 
+  /**
+   * @desc Delete an application request
+   * @param {Object} application - The application to delete
+   * @function
+   */
   deleteApplication = async application => {
     await firebase
       .firestore()
@@ -164,8 +171,14 @@ class NavBar extends React.Component {
       .delete();
   };
 
+  /**
+   * @desc Add an application request
+   * @param {Object} application - The application to add
+   * @function
+   */
   addApplication = async application => {
 
+    //Creates a second instance of connection to the database so that the user is not logged in when adding a new member
     const config = {
       apiKey: "AIzaSyA4q3i0kbwLYXW2S-KsMJ0-cEkSHVaTF2o",
       authDomain: "msg-instant.firebaseapp.com",
@@ -178,6 +191,7 @@ class NavBar extends React.Component {
       .auth()
       .createUserWithEmailAndPassword(application.email, application.password)
       .then(
+        //Creation of the object to send in the database
         authRes => {
           const userObj = {
             email: authRes.user.email,
@@ -217,6 +231,10 @@ class NavBar extends React.Component {
       );
   };
 
+  /**
+   * @desc Returns the user to the login page if he is not logged in
+   * @function
+   */
   componentDidMount = () => {
     firebase.auth().onAuthStateChanged(async _usr => {
       if (!_usr) this.props.history.push("/login");

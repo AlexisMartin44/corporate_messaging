@@ -5,7 +5,14 @@ const styles = theme => ({
     top: 0,
     right: 0,
     height: "100%",
-    width: "80%"
+    width: "80%",
+    [theme.breakpoints.down("1200")]: {
+      top: "64px",
+      height: "calc(100% - 70px)",
+    },
+    [theme.breakpoints.down("xs")]: {
+      top: "56px",
+    },
   },
   content: {
     height: "calc(94% - 50px)",

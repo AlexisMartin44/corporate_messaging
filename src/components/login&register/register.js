@@ -38,9 +38,7 @@ const schema = joi.object().keys({
 class RegisterComponent extends React.Component {
   constructor() {
     super();
-    /**
-     * State that contains input values
-     */
+    //State that contains input values
     this.state = {
       email: null,
       firstName: null,
@@ -53,7 +51,10 @@ class RegisterComponent extends React.Component {
     };
   }
 
-  /** Render method of RegisterComponent */
+  /**
+   * @desc Render method of RegisterComponent
+   * @function
+   */
   render() {
 
     const { classes } = this.props;

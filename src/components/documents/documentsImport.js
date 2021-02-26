@@ -15,27 +15,33 @@ import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import firebase from "firebase";
 
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: 48 * 4.5 + 8,
-      width: 250,
-    },
-  },
-};
 
+//List of company positions
 const positions = ["Ingénieur", "Stagiaire", "CPO", "Technicien"];
+//List of company services
 const services = ["Sécurité", "Administration", "Commercial"];
 
+/**
+ * @desc Change the style of the selected elements
+ * @function
+ * @param {string} name - Name of the position or service
+ * @param {Object} destinationFiles - List of selected positions or services 
+ */
 function getStyles(name, destinationFiles) {
   return {
     fontWeight: destinationFiles.indexOf(name) === -1 ? "250" : "400",
   };
 }
 
+/**
+ * @classdesc Component allowing to add files in the database according to positions or services
+ * @class
+ * @extends React.Component
+ */
 class DocumentImportComponent extends React.Component {
   constructor(props) {
     super();
+    //State that contains the files to be sent, the choice between position or service, the services or positions selected 
     this.state = {
       files: null,
       selectValue: "",
@@ -44,6 +50,12 @@ class DocumentImportComponent extends React.Component {
     };
   }
 
+  /**
+   * @desc Updates the state according to the input
+   * @param {string} whichInput - Name of the input to update in state
+   * @param {event} event 
+   * @function
+   */
   handleChange = (whichInput, event) => {
     switch (whichInput) {
       case "files":
@@ -63,6 +75,10 @@ class DocumentImportComponent extends React.Component {
     }
   };
 
+  /**
+   * @desc Sends files to the database
+   * @function
+   */
   handleSave = async () => {
     if (
       this.state.selectValue != "" &&
@@ -70,6 +86,7 @@ class DocumentImportComponent extends React.Component {
     ) {
       let file = this.state.files[0];
       let bucketName = "pdf";
+      //Classics requests with firebase
       let storageRef = firebase.storage().ref(`${bucketName}/${file.name}`);
       let uploadTask = storageRef.put(file);
       uploadTask.on(
@@ -84,6 +101,7 @@ class DocumentImportComponent extends React.Component {
           console.log(error);
         },
         async () => {
+          //Store files in a folder for pdf
           await firebase
             .storage()
             .ref("pdf")
@@ -91,6 +109,7 @@ class DocumentImportComponent extends React.Component {
             .getDownloadURL()
             .then(url => {
               if (this.state.selectValue == "service") {
+                //Adds in the files table of the database the information of the added file
                 firebase.firestore().collection("files").doc(file.name).set({
                   name: file.name,
                   services: this.state.destinationFiles,
@@ -113,11 +132,17 @@ class DocumentImportComponent extends React.Component {
     }
   };
 
+  /**
+   * @desc Render method of the DocumentImportComponent
+   * @function
+   */
   render() {
+    //Styles classes
     const { classes } = this.props;
     return (
       <div className={classes.root}>
         <FormControl className={classes.formControl}>
+          {/* First input, to choose between service or position  */}
           <InputLabel id="destinationLabel">Destination</InputLabel>
           <Select
             labelId="destinationLabel"
@@ -130,6 +155,7 @@ class DocumentImportComponent extends React.Component {
           </Select>
         </FormControl>
         <FormControl className={classes.formControl}>
+          {/* Second input, to choose between services or positions */}
           <InputLabel id="destinationNameLabel">Destination Name</InputLabel>
           <Select
             labelId="destinationNameLabel"
@@ -138,7 +164,6 @@ class DocumentImportComponent extends React.Component {
             value={this.state.destinationFiles}
             onChange={e => this.handleChange("destinationName", e)}
             input={<Input />}
-            MenuProps={MenuProps}
           >
             {this.state.selectValue == "service"
               ? services.map(name => (
@@ -163,6 +188,7 @@ class DocumentImportComponent extends React.Component {
         </FormControl>
 
         <label htmlFor="contained-button-file">
+          {/* Button to select files to add */}
           <IconButton
             color="primary"
             aria-label="upload picture"
@@ -182,6 +208,7 @@ class DocumentImportComponent extends React.Component {
           }}
         />
         <Button
+          // Button to send files
           onClick={this.handleSave}
           variant="contained"
           color="primary"

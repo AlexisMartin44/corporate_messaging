@@ -11,13 +11,16 @@ const styles = theme => ({
       justifyContent: "start",
       height: "120vh"
     },
+    [theme.breakpoints.down('xs')]: {
+      height: "110vh"
+    },
   },
   rootToShow: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     position: "absolute",
-    top: 0,
+    top: "0px",
     right: 0,
     height: "98%",
     width: "80%",
@@ -25,6 +28,10 @@ const styles = theme => ({
       flexDirection: "column",
       justifyContent: "start",
     },
+    [theme.breakpoints.down('1200')]: {
+      top: "70px",
+    },
+
   },
   card: {
     borderRadius: 12,
@@ -48,10 +55,11 @@ const styles = theme => ({
     textAlign: "center",
     minWidth: 500,
     marginRight: "15px",
+    minHeight: 275,
     [theme.breakpoints.down("1300")]: {
       marginRight: 0,
       minWidth: 287,
-      minHeight: 275,
+      minHeight: 0,
       width: "90%",
     },
   },
@@ -75,15 +83,15 @@ const styles = theme => ({
   secondCardToShow: {
     borderRadius: 12,
     textAlign: "center",
-    minWidth: 500,
     marginLeft: "15px",
-    [theme.breakpoints.down("1300")]: {
-      marginTop: "10px",
+    width: "100%",
+    [theme.breakpoints.down("xs")]: {
       marginLeft: 0,
-      minWidth: 287,
-      minHeight: 275,
-      width: "80%",
     },
+  },
+  secondCardContent: {
+    padding: 0,
+    paddingBottom: "0 !important",
   },
   cardHeader: {
     textAlign: "center",
@@ -101,8 +109,12 @@ const styles = theme => ({
     width: theme.spacing(40),
     height: theme.spacing(40),
     [theme.breakpoints.down("1300")]: {
-      width: theme.spacing(25),
-      height: theme.spacing(25),
+      width: theme.spacing(20),
+      height: theme.spacing(20),
+    },
+    [theme.breakpoints.down("1200")]: {
+      width: theme.spacing(10),
+      height: theme.spacing(10),
     },
   },
   input: {
@@ -116,6 +128,14 @@ const styles = theme => ({
     margin: "10px",
     marginTop: "20px",
     verticalAlign: "center",
+  },
+  typoToShow: {
+    margin: "10px",
+    marginTop: "20px",
+    verticalAlign: "center",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "150%",
+    },
   },
   element: {
     display: "flex",
@@ -137,6 +157,40 @@ const styles = theme => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center"
+  },
+  sendIcon: {
+    marginLeft: "10px",
+  },
+  secondPartToShow: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    minWidth: 500,
+    [theme.breakpoints.down("1300")]: {
+      marginTop: "10px",
+      marginLeft: 0,
+      minWidth: 287,
+      minHeight: 275,
+      width: "80%",
+    },
+  },
+  secondPart: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    minWidth: 500,
+    [theme.breakpoints.down("xs")]: {
+      marginTop: "10px",
+      marginLeft: 0,
+      minWidth: 287,
+      minHeight: 275,
+      width: "80%",
+    },
+  },
+  sendButton: {
+    marginTop: "10px",
   }
 });
 

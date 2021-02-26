@@ -43,7 +43,7 @@ class MessageList extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="static" className={classes.appbar}>
           <Toolbar className={classes.toolbar}>
             <Autocomplete
               className={classes.autocomplete}
@@ -51,9 +51,9 @@ class MessageList extends React.Component {
               id="filter-demo"
               options={this.props.users.filter(user => user.email != this.props.userEmail)}
               filterOptions={this.filterOptions}
-              style={{ color: "white" }}
+              style={{ color: "white !important" }}
               renderInput={(params) => (
-                <TextField style={{ color: "white" }} {...params} label="Search" />
+                <TextField {...params} label="Search" />
               )}
               renderOption={(option) => (
                 <UserComponent newChat={this.newChat} user={option} setUserToShow={this.setUserToShow} />

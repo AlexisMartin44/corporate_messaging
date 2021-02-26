@@ -45,25 +45,29 @@ class DashboardComponent extends React.Component {
 
     return (
       //Depending on the value of the state, displays different components
-      //The Paper component corresponds to the tab at the bottom to changes the component page
       <div>
-        {this.state.value === 0 && (
-          <MessageComponent history={this.props.history} />
-        )}
-        {this.state.value === 1 && (
-          <DocumentComponent
-            isAdmin={this.state.userData.isAdmin}
-            service={this.state.userData.service}
-            position={this.state.userData.position}
-          />
-        )}
-        {this.state.value === 2 && (
-          <ProfileComponent toShow={false} userData={this.state.userData} />
-        )}
+        { //MessageComponent, that allows to view or send messages 
+          this.state.value === 0 && (
+            <MessageComponent history={this.props.history} />
+          )}
+        { //DocumentComponent, allows to consult the files concerning a workstation or a service, but also to add some if the user is an admin
+          this.state.value === 1 && (
+            <DocumentComponent
+              isAdmin={this.state.userData.isAdmin}
+              service={this.state.userData.service}
+              position={this.state.userData.position}
+            />
+          )}
+        { //ProfileComponent, allows you to view your profile information and change your profile picture 
+          this.state.value === 2 && (
+            <ProfileComponent toShow={false} userData={this.state.userData} />
+          )}
+        {/* NavBar at the top of the screen, allows you to log out and see the applications requests if the user is an admin.  */}
         <NavBar
           history={this.props.history}
           applicationRequests={this.state.applicationRequests}
         />
+        {/* Tabs at the bottom of the screen, allows to change the daughter component, so change tabs */}
         <Paper square className={classes.root}>
           <Tabs
             value={this.state.value}
@@ -95,9 +99,11 @@ class DashboardComponent extends React.Component {
           .firestore()
           .collection("users")
           .onSnapshot(async res => {
+            //Contains all users of the database
             const users = res.docs.map(_doc => _doc.data());
             let userData;
             for (let user of users) {
+              //Find the logged-in user
               if (user.email === _usr.email) {
                 userData = user;
                 break;
@@ -117,6 +123,7 @@ class DashboardComponent extends React.Component {
                 .collection("applicationRequest")
                 .onSnapshot(async res => {
                   this.setState({
+                    //Retrieves all registration requests
                     applicationRequests: res.docs.map(_doc => _doc.data()),
                   });
                   this.setState({ value: 2 });
