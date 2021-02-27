@@ -6,13 +6,13 @@ const styles = theme => ({
     position: "relative",
     marginTop: "80px",
     height: "70vh",
-    [theme.breakpoints.down('1050')]: {
+    [theme.breakpoints.down("1050")]: {
       flexDirection: "column",
       justifyContent: "start",
-      height: "120vh"
+      height: "120vh",
     },
-    [theme.breakpoints.down('xs')]: {
-      height: "110vh"
+    [theme.breakpoints.down("xs")]: {
+      height: "110vh",
     },
   },
   rootToShow: {
@@ -24,21 +24,20 @@ const styles = theme => ({
     right: 0,
     height: "98%",
     width: "80%",
-    [theme.breakpoints.down('1300')]: {
+    [theme.breakpoints.down("1300")]: {
       flexDirection: "column",
       justifyContent: "start",
     },
-    [theme.breakpoints.down('1200')]: {
+    [theme.breakpoints.down("1200")]: {
       top: "70px",
     },
-
   },
   card: {
     borderRadius: 12,
     textAlign: "center",
     minWidth: 500,
     marginRight: "15px",
-    [theme.breakpoints.down('1050')]: {
+    [theme.breakpoints.down("1050")]: {
       minWidth: 400,
       maxWidth: "100%",
       minHeight: 550,
@@ -68,7 +67,7 @@ const styles = theme => ({
     textAlign: "center",
     minWidth: 500,
     marginLeft: "15px",
-    [theme.breakpoints.down('1050')]: {
+    [theme.breakpoints.down("1050")]: {
       minWidth: 400,
       minHeight: 275,
       marginTop: "5vh",
@@ -100,7 +99,7 @@ const styles = theme => ({
   large: {
     width: theme.spacing(40),
     height: theme.spacing(40),
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down("xs")]: {
       width: theme.spacing(25),
       height: theme.spacing(25),
     },
@@ -140,23 +139,23 @@ const styles = theme => ({
   element: {
     display: "flex",
     justifyContent: "space-evenly",
-    alignItems: "center"
+    alignItems: "center",
   },
   typoElement: {
-    width: "200px"
+    width: "200px",
   },
   stats: {
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   marginLeft: {
-    marginLeft: "10px"
+    marginLeft: "10px",
   },
   cardContent: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   sendIcon: {
     marginLeft: "10px",
@@ -191,7 +190,7 @@ const styles = theme => ({
   },
   sendButton: {
     marginTop: "10px",
-  }
+  },
 });
 
 export default styles;

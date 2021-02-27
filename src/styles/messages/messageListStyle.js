@@ -1,4 +1,4 @@
-import { fade } from '@material-ui/core/styles';
+import { fade } from "@material-ui/core/styles";
 
 const styles = theme => ({
   root: {
@@ -13,7 +13,7 @@ const styles = theme => ({
     alignItems: "center",
     [theme.breakpoints.down("xs")]: {
       display: "flex",
-      justifyContent: "center"
+      justifyContent: "center",
     },
   },
   itemText: {
@@ -58,7 +58,7 @@ const styles = theme => ({
   },
   autocomplete: {
     width: "80%",
-  }
+  },
 });
 
 export default styles;

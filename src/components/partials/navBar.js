@@ -12,20 +12,19 @@ import {
   Paper,
   Snackbar,
 } from "@material-ui/core";
-import MuiAlert from '@material-ui/lab/Alert';
+import MuiAlert from "@material-ui/lab/Alert";
 import firebase from "firebase";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
+import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-
 /**
  * @function
  * @desc Styles of NavBar
- * @param {*} theme 
+ * @param {*} theme
  */
 const useStyles = theme => ({
   root: {
@@ -70,10 +69,10 @@ const useStyles = theme => ({
     marginLeft: "30px",
     display: "flex",
     flexDirection: "column",
-    justifySelf: "end"
+    justifySelf: "end",
   },
   margin: {
-    marginBottom: "5px"
+    marginBottom: "5px",
   },
   button: {
     [theme.breakpoints.down(540)]: {
@@ -82,16 +81,15 @@ const useStyles = theme => ({
     },
   },
   snackbar: {
-    width: '100%',
-    '& > * + *': {
+    width: "100%",
+    "& > * + *": {
       marginTop: theme.spacing(2),
     },
   },
-
 });
 
-/** 
- * @classdesc Application navigation bar, allows to log out, and to see the registration requests if the logged-in user is an admin 
+/**
+ * @classdesc Application navigation bar, allows to log out, and to see the registration requests if the logged-in user is an admin
  * @class
  * @param {Object} applicationRequests - List of registration requests
  * @extends React.Component  */
@@ -117,54 +115,111 @@ class NavBar extends React.Component {
             <Typography variant="h6" className={classes.title}>
               Corporate Messaging
             </Typography>
-            {
-              this.props.applicationRequests.length > 0 ?
-                <div className={classes.sectionDesktop}>
-                  <PopupState variant="popover" popuId="popApplications">
-                    {(popupState) => (
-                      <div>
-                        <IconButton aria-label="show notifications" color="inherit" {...bindTrigger(popupState)}>
-                          <Badge badgeContent={this.props.applicationRequests.length} color="secondary">
-                            <NotificationsIcon />
-                          </Badge>
-                        </IconButton>
-                        <Popover
-                          {...bindPopover(popupState)}
-                          anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'center',
-                          }}
-                          transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'center',
-                          }}
+            {this.props.applicationRequests.length > 0 ? (
+              <div className={classes.sectionDesktop}>
+                <PopupState variant="popover" popuId="popApplications">
+                  {popupState => (
+                    <div>
+                      <IconButton
+                        aria-label="show notifications"
+                        color="inherit"
+                        {...bindTrigger(popupState)}
+                      >
+                        <Badge
+                          badgeContent={this.props.applicationRequests.length}
+                          color="secondary"
                         >
-                          <Box className={classes.box}>
-                            {this.props.applicationRequests.map((application, _index) => {
+                          <NotificationsIcon />
+                        </Badge>
+                      </IconButton>
+                      <Popover
+                        {...bindPopover(popupState)}
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "center",
+                        }}
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "center",
+                        }}
+                      >
+                        <Box className={classes.box}>
+                          {this.props.applicationRequests.map(
+                            (application, _index) => {
                               return (
                                 <div key={_index}>
                                   <Paper className={classes.paper}>
                                     <div className={classes.typoDiv}>
-                                      <Typography className={classes.typo} variant="button">{application.email}</Typography>
-                                      <Typography className={classes.typo} variant="caption" display="block">{application.firstName} {application.lastName}</Typography>
-                                      <Typography className={classes.typo} variant="caption" display="block">{application.service}</Typography>
-                                      <Typography className={classes.typo} variant="caption" display="block">{application.position}</Typography>
+                                      <Typography
+                                        className={classes.typo}
+                                        variant="button"
+                                      >
+                                        {application.email}
+                                      </Typography>
+                                      <Typography
+                                        className={classes.typo}
+                                        variant="caption"
+                                        display="block"
+                                      >
+                                        {application.firstName}{" "}
+                                        {application.lastName}
+                                      </Typography>
+                                      <Typography
+                                        className={classes.typo}
+                                        variant="caption"
+                                        display="block"
+                                      >
+                                        {application.service}
+                                      </Typography>
+                                      <Typography
+                                        className={classes.typo}
+                                        variant="caption"
+                                        display="block"
+                                      >
+                                        {application.position}
+                                      </Typography>
                                     </div>
                                     <div className={classes.buttonDiv}>
-                                      <Button onClick={this.addApplication.bind(this, application)} className={[classes.margin, classes.button].join(' ')} variant="contained" color="primary">Accept</Button>
-                                      <Button onClick={this.deleteApplication.bind(this, application)} className={classes.button} variant="contained" color="secondary">Decline</Button>
+                                      <Button
+                                        onClick={this.addApplication.bind(
+                                          this,
+                                          application
+                                        )}
+                                        className={[
+                                          classes.margin,
+                                          classes.button,
+                                        ].join(" ")}
+                                        variant="contained"
+                                        color="primary"
+                                      >
+                                        Accept
+                                      </Button>
+                                      <Button
+                                        onClick={this.deleteApplication.bind(
+                                          this,
+                                          application
+                                        )}
+                                        className={classes.button}
+                                        variant="contained"
+                                        color="secondary"
+                                      >
+                                        Decline
+                                      </Button>
                                     </div>
                                   </Paper>
                                 </div>
-                              )
-                            })}
-                          </Box>
-                        </Popover>
-                      </div>
-                    )}
-                  </PopupState>
-                </div> : <div></div>
-            }
+                              );
+                            }
+                          )}
+                        </Box>
+                      </Popover>
+                    </div>
+                  )}
+                </PopupState>
+              </div>
+            ) : (
+              <div></div>
+            )}
             <Button
               onClick={async () => {
                 this.props.history.push("/login");
@@ -177,18 +232,26 @@ class NavBar extends React.Component {
           </Toolbar>
         </AppBar>
         <div className={classes.snackbar}>
-          <Snackbar open={this.state.openSuccess} autoHideDuration={6000} onClose={this.handleCloseSuccess}>
+          <Snackbar
+            open={this.state.openSuccess}
+            autoHideDuration={6000}
+            onClose={this.handleCloseSuccess}
+          >
             <Alert onClose={this.handleCloseSuccess} severity="success">
               {this.state.signupSuccess}
             </Alert>
           </Snackbar>
-          <Snackbar open={this.state.openError} autoHideDuration={6000} onClose={this.handleCloseError}>
+          <Snackbar
+            open={this.state.openError}
+            autoHideDuration={6000}
+            onClose={this.handleCloseError}
+          >
             <Alert onClose={this.handleCloseError} severity="error">
               {this.state.signupError}
             </Alert>
           </Snackbar>
         </div>
-      </div >
+      </div>
     );
   }
 
@@ -203,7 +266,10 @@ class NavBar extends React.Component {
       .collection("applicationRequest")
       .doc(application.email)
       .delete();
-    await this.setState({ signupSuccess: "User successfully deleted !", openSuccess: true })
+    await this.setState({
+      signupSuccess: "User successfully deleted !",
+      openSuccess: true,
+    });
   };
 
   handleCloseSuccess = (event, reason) => {
@@ -211,14 +277,14 @@ class NavBar extends React.Component {
       return;
     }
     this.setState({ openSuccess: false });
-  }
+  };
 
   handleCloseError = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     this.setState({ openError: false });
-  }
+  };
 
   /**
    * @desc Add an application request
@@ -226,7 +292,6 @@ class NavBar extends React.Component {
    * @function
    */
   addApplication = async application => {
-
     //Creates a second instance of connection to the database so that the user is not logged in when adding a new member
     const config = {
       apiKey: "AIzaSyA4q3i0kbwLYXW2S-KsMJ0-cEkSHVaTF2o",
@@ -234,7 +299,6 @@ class NavBar extends React.Component {
       projectId: "msg-instant",
     };
     const secondaryApp = firebase.initializeApp(config, "Secondary");
-
 
     secondaryApp
       .auth()
@@ -250,7 +314,7 @@ class NavBar extends React.Component {
             lastName: application.lastName,
             date: application.date,
             isAdmin: false,
-            image: ""
+            image: "",
           };
           secondaryApp
             .firestore()
@@ -266,7 +330,10 @@ class NavBar extends React.Component {
                   .delete();
                 secondaryApp.auth().signOut();
                 secondaryApp.delete();
-                await this.setState({ signupSuccess: "User successfully added !", openSuccess: true });
+                await this.setState({
+                  signupSuccess: "User successfully added !",
+                  openSuccess: true,
+                });
                 console.log(this.state.signupSuccess, this.state.openSuccess);
               },
               dbErr => {

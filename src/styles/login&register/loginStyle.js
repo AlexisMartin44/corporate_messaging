@@ -32,7 +32,7 @@ const useStyles = theme => ({
   },
   typo: {
     textAlign: "center",
-  }
+  },
 });
 
 export default useStyles;

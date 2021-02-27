@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../../styles/documents/documentTableStyle";
-import { lighten, withStyles, makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -27,7 +27,7 @@ function createData(name, date, url) {
  * @desc Sorts the files according to a field
  * @param {Object} a - First object to compare
  * @param {Object} b - Second object to compare
- * @param {string} orderBy - Name of the field to be sorted 
+ * @param {string} orderBy - Name of the field to be sorted
  * @function
  */
 function descendingComparator(a, b, orderBy) {
@@ -40,8 +40,7 @@ function descendingComparator(a, b, orderBy) {
       return 1;
     }
     return 0;
-  }
-  else {
+  } else {
     if (b[orderBy] < a[orderBy]) {
       return -1;
     }
@@ -53,9 +52,9 @@ function descendingComparator(a, b, orderBy) {
 }
 
 /**
- * @desc Returns the sorting method to be used according to order 
+ * @desc Returns the sorting method to be used according to order
  * @param {string} order - Asc or desc
- * @param {string} orderBy - Name of the field to be sorted 
+ * @param {string} orderBy - Name of the field to be sorted
  * @function
  */
 function getComparator(order, orderBy) {
@@ -66,7 +65,7 @@ function getComparator(order, orderBy) {
 
 /**
  * @desc Sort the lines according to what you want to do
- * @param {Object} array - Rows to display 
+ * @param {Object} array - Rows to display
  * @param {*} comparator - Comparator to use
  * @function
  */
@@ -93,7 +92,7 @@ const headCells = [
 
 /**
  * @desc Main line of the table
- * @param {Object} props 
+ * @param {Object} props
  * @function
  */
 function EnhancedTableHead(props) {
@@ -132,7 +131,7 @@ function EnhancedTableHead(props) {
   );
 }
 
-/** 
+/**
  * @classdesc DocumentTable component, displays files in Tab component
  * @class
  * @extends React.Component  */
@@ -214,7 +213,7 @@ class DocumentTableComponent extends React.Component {
                     .slice(
                       this.state.page * this.state.rowsPerPage,
                       this.state.page * this.state.rowsPerPage +
-                      this.state.rowsPerPage
+                        this.state.rowsPerPage
                     )
                     .map((row, index) => {
                       const labelId = `enhanced-table-checkbox-${index}`;
@@ -230,7 +229,9 @@ class DocumentTableComponent extends React.Component {
                           >
                             {row.name}
                           </TableCell>
-                          <TableCell align="center">{date.toLocaleString()}</TableCell>
+                          <TableCell align="center">
+                            {date.toLocaleString()}
+                          </TableCell>
                           <TableCell align="center">{row.url}</TableCell>
                         </TableRow>
                       );

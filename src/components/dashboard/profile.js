@@ -3,10 +3,18 @@ import styles from "../../styles/dashboard/profileStyle";
 import { withStyles } from "@material-ui/core/styles";
 import firebase from "firebase";
 import "firebase/storage";
-import { Avatar, Button, Typography, Card, CardHeader, Divider, CardContent } from "@material-ui/core";
-import SendIcon from '@material-ui/icons/Send';
+import {
+  Avatar,
+  Button,
+  Typography,
+  Card,
+  CardHeader,
+  Divider,
+  CardContent,
+} from "@material-ui/core";
+import SendIcon from "@material-ui/icons/Send";
 
-/** 
+/**
  * @classdesc Profile component, displays user information in parameter
  * @class
  * @param {boolean} toShow - True if the profile component is called to consult another user, false if not.
@@ -23,7 +31,6 @@ class ProfileComponent extends React.Component {
       progress: 0,
     };
   }
-
 
   /**
    * @desc Update state
@@ -82,7 +89,7 @@ class ProfileComponent extends React.Component {
   newMessage = () => {
     this.props.setUserToShow(this.props.userData);
     this.props.newChatBtnFn();
-  }
+  };
 
   /**
    * @desc Render method of ProfileComponent
@@ -100,64 +107,128 @@ class ProfileComponent extends React.Component {
           <CardHeader title="Profile" className={classes.cardHeader} />
           <Divider variant="middle" />
           <CardContent className={classes.cardContent}>
-            { //Displays data such as user photo, first and last name, and whether the user is admin or not
-              this.props.userData.isAdmin ? <Typography variant="h5" className={classes.typo}>Admin</Typography> : <div></div>}
-            { //It is possible to change your profile image only by looking at your profile
-              this.props.toShow ? <Avatar
-                src={this.props.userData.image}
-                className={classes.largeToShow}
-              /> : <div><input
-                accept="image/*"
-                className={classes.input}
-                id="contained-button-file"
-                type="file"
-                onChange={e => {
-                  this.handleChange(e.target.files);
-                }}
-              />
+            {
+              //Displays data such as user photo, first and last name, and whether the user is admin or not
+              this.props.userData.isAdmin ? (
+                <Typography variant="h5" className={classes.typo}>
+                  Admin
+                </Typography>
+              ) : (
+                <div></div>
+              )
+            }
+            {
+              //It is possible to change your profile image only by looking at your profile
+              this.props.toShow ? (
+                <Avatar
+                  src={this.props.userData.image}
+                  className={classes.largeToShow}
+                />
+              ) : (
+                <div>
+                  <input
+                    accept="image/*"
+                    className={classes.input}
+                    id="contained-button-file"
+                    type="file"
+                    onChange={e => {
+                      this.handleChange(e.target.files);
+                    }}
+                  />
                   <label htmlFor="contained-button-file">
-                    <Button className={classes.button} color="primary" component="span">
+                    <Button
+                      className={classes.button}
+                      color="primary"
+                      component="span"
+                    >
                       <Avatar
                         src={this.props.userData.image}
                         className={classes.large}
                       />
                     </Button>
-                  </label></div>}
-            <Typography className={this.props.toShow ? classes.typoToShow : classes.typo} variant="h4">{this.props.userData.firstName} {this.props.userData.lastName}</Typography>
+                  </label>
+                </div>
+              )
+            }
+            <Typography
+              className={this.props.toShow ? classes.typoToShow : classes.typo}
+              variant="h4"
+            >
+              {this.props.userData.firstName} {this.props.userData.lastName}
+            </Typography>
           </CardContent>
         </Card>
-        <div className={this.props.toShow ? classes.secondPartToShow : classes.secondPart}>
-          <Card className={this.props.toShow ? classes.secondCardToShow : classes.secondCard}>
+        <div
+          className={
+            this.props.toShow ? classes.secondPartToShow : classes.secondPart
+          }
+        >
+          <Card
+            className={
+              this.props.toShow ? classes.secondCardToShow : classes.secondCard
+            }
+          >
             <CardHeader title="Information" className={classes.cardHeader} />
             <Divider variant="middle" />
             <CardContent>
               {/* Display of data such as service, position, number of files, number of conversations, date of creation */}
               <div className={classes.element}>
-                <Typography className={classes.typoElement} variant="h6">Service :</Typography>
-                <Typography className={classes.typoElement} variant="body1">{this.props.userData.service}</Typography>
+                <Typography className={classes.typoElement} variant="h6">
+                  Service :
+                </Typography>
+                <Typography className={classes.typoElement} variant="body1">
+                  {this.props.userData.service}
+                </Typography>
               </div>
               <div className={classes.element}>
-                <Typography className={classes.typoElement} variant="h6">Position :</Typography>
-                <Typography className={classes.typoElement} variant="body1">{this.props.userData.position}</Typography>
+                <Typography className={classes.typoElement} variant="h6">
+                  Position :
+                </Typography>
+                <Typography className={classes.typoElement} variant="body1">
+                  {this.props.userData.position}
+                </Typography>
               </div>
               <div className={classes.element}>
-                <Typography className={classes.typoElement} variant="h6">Registration :</Typography>
-                <Typography className={classes.typoElement} variant="body1">{date.toLocaleDateString()}</Typography>
+                <Typography className={classes.typoElement} variant="h6">
+                  Registration :
+                </Typography>
+                <Typography className={classes.typoElement} variant="body1">
+                  {date.toLocaleDateString()}
+                </Typography>
               </div>
             </CardContent>
             <Divider variant="middle" />
-            <CardContent className={this.props.toShow ? classes.secondCardContent : null}>
+            <CardContent
+              className={this.props.toShow ? classes.secondCardContent : null}
+            >
               <div className={classes.stats}>
                 <Typography variant="h6">{this.state.chatsLength}</Typography>
-                <Typography className={classes.marginLeft} variant="body1">conversation</Typography>
+                <Typography className={classes.marginLeft} variant="body1">
+                  conversation
+                </Typography>
               </div>
               <div className={classes.stats}>
-                <Typography variant="h6">{this.state.positionLength + this.state.serviceLength}</Typography>
-                <Typography className={classes.marginLeft} variant="body1">files</Typography>
+                <Typography variant="h6">
+                  {this.state.positionLength + this.state.serviceLength}
+                </Typography>
+                <Typography className={classes.marginLeft} variant="body1">
+                  files
+                </Typography>
               </div>
             </CardContent>
           </Card>
-          {this.props.toShow ? <Button onClick={this.newMessage} className={classes.sendButton} variant="contained" color="primary">Message <SendIcon className={classes.sendIcon} /></Button> : <div></div>}
+          {this.props.toShow ? (
+            <Button
+              onClick={this.newMessage}
+              className={classes.sendButton}
+              variant="contained"
+              color="primary"
+            >
+              Message <SendIcon className={classes.sendIcon} />
+            </Button>
+          ) : (
+            <div></div>
+          )}
         </div>
       </div>
     );
@@ -186,18 +257,22 @@ class ProfileComponent extends React.Component {
         .collection("files")
         .where("services", "array-contains", this.props.userData.service)
         .onSnapshot(async res => {
-          await this.setState({ serviceLength: res.docs.map(_doc => _doc.data()).length });
+          await this.setState({
+            serviceLength: res.docs.map(_doc => _doc.data()).length,
+          });
         });
       //Retrieves position files
       firebase
         .firestore()
         .collection("files")
-        .where("position", "array-contains", this.props.userData.position)
+        .where("positions", "array-contains", this.props.userData.position)
         .onSnapshot(async res => {
-          await this.setState({ positionLength: res.docs.map(_doc => _doc.data()).length });
+          await this.setState({
+            positionLength: res.docs.map(_doc => _doc.data()).length,
+          });
         });
     }
-  }
+  };
 }
 
 //export the component with his styles

@@ -4,7 +4,7 @@ import MessageList from "./messageList";
 import MessageView from "./messageView";
 import MessageTextBox from "./messageTextBox";
 import styles from "../../styles/messages/messageComponentStyle";
-import { Button, withStyles } from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
 import firebase from "firebase";
 import ProfileComponent from "../dashboard/profile";
 
@@ -24,16 +24,19 @@ class MessageComponent extends React.Component {
     };
   }
 
-  setUserToShow = async (user) => {
-    await this.setState({ userToShow: user, userVisible: true, newChatFormVisible: false, selectedChat: null });
-  }
+  setUserToShow = async user => {
+    await this.setState({
+      userToShow: user,
+      userVisible: true,
+      newChatFormVisible: false,
+      selectedChat: null,
+    });
+  };
 
   changeFilter = () => {
-    if (this.state.filterDate == true)
-      this.setState({ filterDate: false });
-    else
-      this.setState({ filterDate: true });
-  }
+    if (this.state.filterDate == true) this.setState({ filterDate: false });
+    else this.setState({ filterDate: true });
+  };
 
   render() {
     const { classes } = this.props;
@@ -52,23 +55,38 @@ class MessageComponent extends React.Component {
             newChatBtnFn={this.newChatBtnClicked}
             setUserToShow={this.setUserToShow}
           ></MessageList>
-          {this.state.newChatFormVisible == true || this.state.userVisible == true ? null : this.state.selectedChat != null ?
-            (
-              <MessageView
-                user={this.state.email}
-                chat={this.state.chats[this.state.selectedChat]}
-              ></MessageView>
-            ) : null}
-          {
-            this.state.userVisible ? (<ProfileComponent newChatBtnFn={this.newChatBtnClicked} setUserToShow={this.setUserToShow} toShow={true} userData={this.state.userToShow} />) : null
-          }
+          {this.state.newChatFormVisible == true ||
+          this.state.userVisible == true ? null : this.state.selectedChat !=
+            null ? (
+            <MessageView
+              user={this.state.email}
+              friend={
+                this.state.users.filter(
+                  user =>
+                    user.email ==
+                    this.state.chats[this.state.selectedChat].users.filter(
+                      _usr => _usr !== this.state.email
+                    )[0]
+                )[0]
+              }
+              chat={this.state.chats[this.state.selectedChat]}
+            ></MessageView>
+          ) : null}
+          {this.state.userVisible ? (
+            <ProfileComponent
+              newChatBtnFn={this.newChatBtnClicked}
+              setUserToShow={this.setUserToShow}
+              toShow={true}
+              userData={this.state.userToShow}
+            />
+          ) : null}
           {this.state.selectedChat !== null &&
-            !this.state.newChatFormVisible ? (
-              <MessageTextBox
-                userClickedInputFn={this.messageRead}
-                submitMessageFn={this.submitMessage}
-              ></MessageTextBox>
-            ) : null}
+          !this.state.newChatFormVisible ? (
+            <MessageTextBox
+              userClickedInputFn={this.messageRead}
+              submitMessageFn={this.submitMessage}
+            ></MessageTextBox>
+          ) : null}
           {this.state.newChatFormVisible ? (
             <NewMessage
               user={this.state.userToShow}
@@ -103,8 +121,7 @@ class MessageComponent extends React.Component {
         }),
         receiverHasRead: false,
       });
-    if (this.state.filterDate)
-      await this.setState({ selectedChat: 0 });
+    if (this.state.filterDate) await this.setState({ selectedChat: 0 });
   };
 
   //   // Always in alphabetical order:
@@ -112,7 +129,11 @@ class MessageComponent extends React.Component {
   buildDocKey = friend => [this.state.email, friend].sort().join(":");
 
   newChatBtnClicked = () =>
-    this.setState({ newChatFormVisible: true, selectedChat: null, userVisible: false });
+    this.setState({
+      newChatFormVisible: true,
+      selectedChat: null,
+      userVisible: false,
+    });
 
   newChatSubmit = async chatObj => {
     const docKey = this.buildDocKey(chatObj.sendTo);
@@ -132,12 +153,16 @@ class MessageComponent extends React.Component {
         receiverHasRead: false,
       });
     this.setState({ newChatFormVisible: false });
-    if (this.state.filterDate == true)
-      this.selectChat(0);
+    if (this.state.filterDate == true) this.selectChat(0);
   };
 
   selectChat = async chatIndex => {
-    await this.setState({ selectedChat: chatIndex, newChatFormVisible: false, userVisible: false, userToShow: null });
+    await this.setState({
+      selectedChat: chatIndex,
+      newChatFormVisible: false,
+      userVisible: false,
+      userToShow: null,
+    });
     this.messageRead();
   };
 

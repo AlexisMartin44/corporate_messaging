@@ -14,12 +14,10 @@ import {
   CssBaseline,
   Typography,
   Button,
-  FormControlLabel,
-  Checkbox,
   Box,
 } from "@material-ui/core";
 
-/** 
+/**
  * @classdesc Login component with email and password
  * @class
  * @extends React.Component  */
@@ -34,7 +32,7 @@ class LoginComponent extends React.Component {
     };
   }
 
-  /** 
+  /**
    * @desc Render method of LoginComponent
    * @function
    */
@@ -78,9 +76,15 @@ class LoginComponent extends React.Component {
                 autoComplete="password"
                 onChange={e => this.userTyping("password", e)}
               />
-              {
-                this.state.loginError ? <Typography className={classes.typo} variant="subtitle1" color="secondary">Wrong email or password</Typography> : null
-              }
+              {this.state.loginError ? (
+                <Typography
+                  className={classes.typo}
+                  variant="subtitle1"
+                  color="secondary"
+                >
+                  Wrong email or password
+                </Typography>
+              ) : null}
               <Button
                 type="submit"
                 fullWidth
@@ -112,9 +116,9 @@ class LoginComponent extends React.Component {
     );
   }
 
-  /** 
+  /**
    * Update the state when an input has a new value
-   * @function 
+   * @function
    * @param {string} whichInput - Name of the state to update
    */
   userTyping = (whichInput, event) => {
@@ -135,7 +139,7 @@ class LoginComponent extends React.Component {
   /**
    * @param {event} e
    * @desc Submit the login
-  */
+   */
   submitLogin = async e => {
     e.preventDefault(); // This is to prevent the automatic refreshing of the page on submit.
 

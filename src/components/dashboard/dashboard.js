@@ -10,7 +10,7 @@ import NavBar from "../partials/navBar";
 import DocumentComponent from "../documents/documents";
 import ProfileComponent from "./profile";
 
-/** 
+/**
  * @classdesc Main component of the application, mother component of the other components
  * @class
  * @extends React.Component  */
@@ -26,7 +26,7 @@ class DashboardComponent extends React.Component {
     };
   }
 
-  /** 
+  /**
    * Render method of DashboardComponent
    * @method
    */
@@ -46,22 +46,28 @@ class DashboardComponent extends React.Component {
     return (
       //Depending on the value of the state, displays different components
       <div>
-        { //MessageComponent, that allows to view or send messages 
+        {
+          //MessageComponent, that allows to view or send messages
           this.state.value === 0 && (
             <MessageComponent history={this.props.history} />
-          )}
-        { //DocumentComponent, allows to consult the files concerning a workstation or a service, but also to add some if the user is an admin
+          )
+        }
+        {
+          //DocumentComponent, allows to consult the files concerning a workstation or a service, but also to add some if the user is an admin
           this.state.value === 1 && (
             <DocumentComponent
               isAdmin={this.state.userData.isAdmin}
               service={this.state.userData.service}
               position={this.state.userData.position}
             />
-          )}
-        { //ProfileComponent, allows you to view your profile information and change your profile picture 
+          )
+        }
+        {
+          //ProfileComponent, allows you to view your profile information and change your profile picture
           this.state.value === 2 && (
             <ProfileComponent toShow={false} userData={this.state.userData} />
-          )}
+          )
+        }
         {/* Tabs at the bottom of the screen, allows to change the daughter component, so change tabs */}
         <Paper square className={classes.root}>
           <Tabs
@@ -132,7 +138,6 @@ class DashboardComponent extends React.Component {
           });
       }
     });
-
   };
 }
 

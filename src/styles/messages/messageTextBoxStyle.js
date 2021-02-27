@@ -14,7 +14,7 @@ const styles = theme => ({
     overflow: "auto",
     width: "80%",
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 
   chatTextBox: {

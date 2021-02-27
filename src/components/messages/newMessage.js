@@ -27,11 +27,14 @@ class NewMessage extends React.Component {
       <main className={classes.main}>
         <CssBaseline />
         <Paper className={classes.paper}>
-          <Typography style={{ textAlign: "center" }} component="h1" variant="h5">
+          <Typography
+            style={{ textAlign: "center" }}
+            component="h1"
+            variant="h5"
+          >
             Send a message to {this.props.user.firstName} !
           </Typography>
           <form className={classes.form} onSubmit={e => this.submitNewChat(e)}>
-
             <FormControl fullWidth>
               <InputLabel htmlFor="new-chat-message">
                 Enter Your Message
@@ -71,7 +74,7 @@ class NewMessage extends React.Component {
     if (!firebase.auth().currentUser) this.props.history.push("/login");
   }
 
-  userTyping = (e) => {
+  userTyping = e => {
     this.setState({ message: e.target.value });
   };
 

@@ -14,24 +14,32 @@ import {
   CssBaseline,
   Typography,
   Button,
-  FormControlLabel,
-  Checkbox,
   Box,
 } from "@material-ui/core";
 
 require("joi");
 //Joi schema that allows to validate inputs values
 const schema = joi.object().keys({
-  email: joi.string().email({ tlds: { allow: false } }).min(3).max(45).required(),
+  email: joi
+    .string()
+    .email({ tlds: { allow: false } })
+    .min(3)
+    .max(45)
+    .required(),
   service: joi.string().min(3).max(45).required(),
   position: joi.string().min(3).max(45).required(),
   firstName: joi.string().min(3).max(45).required(),
   lastName: joi.string().min(3).max(45).required(),
-  password: joi.string().regex(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,25})$/).required(),
+  password: joi
+    .string()
+    .regex(
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,25})$/
+    )
+    .required(),
   date: joi.any().required(),
 });
 
-/** 
+/**
  * @classdesc Register component, allows to send a register request to admins
  * @class
  * @extends React.Component  */
@@ -56,7 +64,6 @@ class RegisterComponent extends React.Component {
    * @function
    */
   render() {
-
     const { classes } = this.props;
     return (
       <Container component="main" maxWidth="xs">
@@ -68,10 +75,7 @@ class RegisterComponent extends React.Component {
           <Typography component="h1" variant="h5">
             Register
           </Typography>
-          <form
-            className={classes.form}
-            onSubmit={e => this.submitSignup(e)}
-          >
+          <form className={classes.form} onSubmit={e => this.submitSignup(e)}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -162,9 +166,14 @@ class RegisterComponent extends React.Component {
               </Grid>
 
               <Grid item xs={12}>
-                <Typography className={classes.typo} variant="subtitle1" color="secondary">{this.state.signupError}</Typography>
+                <Typography
+                  className={classes.typo}
+                  variant="subtitle1"
+                  color="secondary"
+                >
+                  {this.state.signupError}
+                </Typography>
               </Grid>
-
             </Grid>
             <Button
               type="submit"
@@ -194,7 +203,7 @@ class RegisterComponent extends React.Component {
   /**
    * Update the state with the values entered
    * @param {string} whichInput - Select the value of the state to update
-   * @param {event} event 
+   * @param {event} event
    */
   userTyping = (whichInput, event) => {
     switch (whichInput) {
@@ -236,45 +245,12 @@ class RegisterComponent extends React.Component {
    * @function
    * @param {event} e
    */
-  submitSignup = async (e) => {
+  submitSignup = async e => {
     e.preventDefault(); // This is to prevent the automatic refreshing of the page on submit.
     if (!(this.state.password === this.state.passwordConfirmation)) {
       this.setState({ signupError: "Passwords do not match" });
       return;
     }
-
-    // const temporaryData = [
-    //   {
-    //     email: "clement.rozycki@gmail.com",
-    //     service: "Commercial",
-    //     position: "Stagiaire",
-    //     firstName: "Clément",
-    //     lastName: "Rozycki",
-    //     password: "testcomplet",
-    //     date: Date.now(),
-    //   },
-    //   {
-    //     email: "noemie.devergne@gmail.com",
-    //     service: "Sécurité",
-    //     position: "Ingénieur",
-    //     firstName: "Noémie",
-    //     lastName: "Devergne",
-    //     password: "testcomplet",
-    //     date: Date.now(),
-    //   }];
-
-    // const mails = ["clement.rozycki@gmail.com", "noemie.devergne@gmail.com"];
-
-    // for (let i = 0; i < 2; i++) {
-    //   await firebase
-    //     .firestore()
-    //     .collection("applicationRequest")
-    //     .doc(mails[i])
-    //     .set(temporaryData[i])
-    //     .then(() => {
-    //       this.props.history.push("/login");
-    //     });
-    // }
 
     try {
       const dataToValidate = {
@@ -285,7 +261,7 @@ class RegisterComponent extends React.Component {
         lastName: this.state.lastName,
         password: this.state.password,
         date: Date.now(),
-      }
+      };
       //Check is data is valid
       const result = schema.validate(dataToValidate);
       if (result.error) {
@@ -301,11 +277,9 @@ class RegisterComponent extends React.Component {
         .then(() => {
           this.props.history.push("/login");
         });
-    }
-    catch (e) {
+    } catch (e) {
       this.setState({ signupError: e });
     }
-
   };
 }
 

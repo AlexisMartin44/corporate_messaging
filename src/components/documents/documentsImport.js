@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../../styles/documents/documentsImportStyle";
-import { useTheme, withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import {
   IconButton,
   Button,
@@ -8,13 +8,17 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  TextField,
   Input,
+  Snackbar,
 } from "@material-ui/core";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import firebase from "firebase";
+import MuiAlert from "@material-ui/lab/Alert";
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 //List of company positions
 const positions = ["Ingénieur", "Stagiaire", "CPO", "Technicien"];
@@ -25,7 +29,7 @@ const services = ["Sécurité", "Administration", "Commercial"];
  * @desc Change the style of the selected elements
  * @function
  * @param {string} name - Name of the position or service
- * @param {Object} destinationFiles - List of selected positions or services 
+ * @param {Object} destinationFiles - List of selected positions or services
  */
 function getStyles(name, destinationFiles) {
   return {
@@ -41,19 +45,21 @@ function getStyles(name, destinationFiles) {
 class DocumentImportComponent extends React.Component {
   constructor(props) {
     super();
-    //State that contains the files to be sent, the choice between position or service, the services or positions selected 
+    //State that contains the files to be sent, the choice between position or service, the services or positions selected
     this.state = {
       files: null,
       selectValue: "",
       destinationFiles: [],
       progress: 0,
+      importError: false,
+      importSuccess: false,
     };
   }
 
   /**
    * @desc Updates the state according to the input
    * @param {string} whichInput - Name of the input to update in state
-   * @param {event} event 
+   * @param {event} event
    * @function
    */
   handleChange = (whichInput, event) => {
@@ -98,6 +104,7 @@ class DocumentImportComponent extends React.Component {
           this.setState({ progress: progress });
         },
         error => {
+          this.setState({ importError: true });
           console.log(error);
         },
         async () => {
@@ -126,6 +133,7 @@ class DocumentImportComponent extends React.Component {
                   date: Date.now(),
                 });
               }
+              this.setState({ importSuccess: true });
             });
         }
       );
@@ -167,23 +175,23 @@ class DocumentImportComponent extends React.Component {
           >
             {this.state.selectValue == "service"
               ? services.map(name => (
-                <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, this.state.destinationFiles)}
-                >
-                  {name}
-                </MenuItem>
-              ))
+                  <MenuItem
+                    key={name}
+                    value={name}
+                    style={getStyles(name, this.state.destinationFiles)}
+                  >
+                    {name}
+                  </MenuItem>
+                ))
               : positions.map(name => (
-                <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, this.state.destinationFiles)}
-                >
-                  {name}
-                </MenuItem>
-              ))}
+                  <MenuItem
+                    key={name}
+                    value={name}
+                    style={getStyles(name, this.state.destinationFiles)}
+                  >
+                    {name}
+                  </MenuItem>
+                ))}
           </Select>
         </FormControl>
 
@@ -217,9 +225,43 @@ class DocumentImportComponent extends React.Component {
         >
           Upload
         </Button>
+        <div className={classes.snackbar}>
+          <Snackbar
+            open={this.state.importSuccess}
+            autoHideDuration={6000}
+            onClose={this.handleCloseSuccess}
+          >
+            <Alert onClose={this.handleCloseSuccess} severity="success">
+              Successfully imported document
+            </Alert>
+          </Snackbar>
+          <Snackbar
+            open={this.state.importError}
+            autoHideDuration={6000}
+            onClose={this.handleCloseError}
+          >
+            <Alert onClose={this.handleCloseError} severity="error">
+              Error in file import
+            </Alert>
+          </Snackbar>
+        </div>
       </div>
     );
   }
+
+  handleCloseSuccess = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    this.setState({ importSuccess: false });
+  };
+
+  handleCloseError = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    this.setState({ importError: false });
+  };
 }
 
 //export the component with his styles
