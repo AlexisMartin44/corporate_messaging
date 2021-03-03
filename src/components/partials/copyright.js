@@ -10,7 +10,7 @@ const Copyright = () => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="/dashboard">
+      <Link color="inherit" href="/dashboard" to="">
         Corporate Messaging
       </Link>{" "}
       {new Date().getFullYear()}

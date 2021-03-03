@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: documents/documents.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: documents/documents.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
+import styles from "../../styles/documents/documentsStyle";
+import { withStyles } from "@material-ui/core/styles";
+import DocumentImportComponent from "./documentsImport";
+import DocumentTableComponent from "./documentTable";
+import firebase from "firebase";
+import { Typography } from "@material-ui/core";
+
+/**
+ * @classdesc Document component, displays files
+ * @class
+ * @extends React.Component  */
+class DocumentComponent extends React.Component {
+  constructor(props) {
+    super();
+    //State with files concerning the connected user
+    this.state = {
+      serviceFiles: [],
+      positionFiles: [],
+    };
+  }
+
+  /**
+   * @desc Update the state with the values from the database
+   * @function
+   */
+  componentDidMount = async () => {
+    await firebase
+      .firestore()
+      .collection("files")
+      .where("services", "array-contains", this.props.service)
+      .onSnapshot(async res => {
+        //Retrieves all files related to the service of the logged-in user
+        this.setState({ serviceFiles: res.docs.map(_doc => _doc.data()) });
+      });
+    await firebase
+      .firestore()
+      .collection("files")
+      .where("positions", "array-contains", this.props.position)
+      .onSnapshot(async res => {
+        //Retrieves all files related to the position of the logged-in user
+        this.setState({ positionFiles: res.docs.map(_doc => _doc.data()) });
+      });
+  };
+
+  /**
+   * @desc fix warning: Can't perform a React state update on an unmounted component
+   * @function
+   */
+  componentWillUnmount() {
+    this.setState = (state, callback) => {
+      return;
+    };
+  }
+
+  //Render method of Document component
+  render() {
+    const { classes } = this.props;
+    return (
+      &lt;div>
+        {
+          //If the logged-in user is an admin, then he can import files
+          this.props.isAdmin &amp;&amp; &lt;DocumentImportComponent />
+        }
+        &lt;div className={classes.center}>
+          {/* The component for displaying files in a table is called twice, the first time sending service files
+           as a parameter and the second time sending position files as a parameter. */}
+          &lt;Typography
+            variant="h5"
+            className={this.props.isAdmin ? classes.typo : classes.firstTypo}
+          >
+            Service : {this.props.service}
+          &lt;/Typography>
+          &lt;DocumentTableComponent files={this.state.serviceFiles} />
+          &lt;Typography variant="h5" className={classes.typo}>
+            Position : {this.props.position}
+          &lt;/Typography>
+          &lt;div className={classes.positionComponent}>
+            &lt;DocumentTableComponent files={this.state.positionFiles} />
+          &lt;/div>
+        &lt;/div>
+      &lt;/div>
+    );
+  }
+}
+
+//export the component with his styles
+export default withStyles(styles)(DocumentComponent);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DashboardComponent.html">DashboardComponent</a></li><li><a href="DocumentComponent.html">DocumentComponent</a></li><li><a href="DocumentImportComponent.html">DocumentImportComponent</a></li><li><a href="DocumentTableComponent.html">DocumentTableComponent</a></li><li><a href="LoginComponent.html">LoginComponent</a></li><li><a href="MessageComponent.html">MessageComponent</a></li><li><a href="MessageList.html">MessageList</a></li><li><a href="MessageTextBox.html">MessageTextBox</a></li><li><a href="MessageView.html">MessageView</a></li><li><a href="NavBar.html">NavBar</a></li><li><a href="NewMessage.html">NewMessage</a></li><li><a href="ProfileComponent.html">ProfileComponent</a></li><li><a href="RegisterComponent.html">RegisterComponent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Copyright">Copyright</a></li><li><a href="global.html#createData">createData</a></li><li><a href="global.html#descendingComparator">descendingComparator</a></li><li><a href="global.html#EnhancedTableHead">EnhancedTableHead</a></li><li><a href="global.html#getComparator">getComparator</a></li><li><a href="global.html#getStyles">getStyles</a></li><li><a href="global.html#handleClick">handleClick</a></li><li><a href="global.html#newMessage">newMessage</a></li><li><a href="global.html#stableSort">stableSort</a></li><li><a href="global.html#UserComponent">UserComponent</a></li><li><a href="global.html#useStyles">useStyles</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Mar 03 2021 23:19:57 GMT+0100 (heure normale d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

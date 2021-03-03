@@ -1,4 +1,32 @@
-import React from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: messages/messageList.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: messages/messageList.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import {
   List,
@@ -69,12 +97,12 @@ class MessageList extends React.Component {
     //Styles classes
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
+      &lt;div className={classes.root}>
         {/* Searchbar */}
-        <AppBar position="static" className={classes.appbar}>
-          <Toolbar className={classes.toolbar}>
+        &lt;AppBar position="static" className={classes.appbar}>
+          &lt;Toolbar className={classes.toolbar}>
             {/* The element that allows to search users */}
-            <Autocomplete
+            &lt;Autocomplete
               className={classes.autocomplete}
               freeSolo
               id="filter-demo"
@@ -84,26 +112,26 @@ class MessageList extends React.Component {
               )}
               filterOptions={this.filterOptions}
               style={{ color: "white !important" }}
-              renderInput={params => <TextField {...params} label="Search" />}
+              renderInput={params => &lt;TextField {...params} label="Search" />}
               getOptionLabel={option => ""}
               //How the results will be displayed
               renderOption={option => (
-                <UserComponent
+                &lt;UserComponent
                   newChat={this.newChat}
                   user={option}
                   setUserToShow={this.setUserToShow}
                 />
               )}
             />
-            <IconButton onClick={this.handleIconClick} component="span">
-              {this.props.filterDate ? <SortByAlphaIcon /> : <EventIcon />}
-            </IconButton>
-          </Toolbar>
-        </AppBar>
+            &lt;IconButton onClick={this.handleIconClick} component="span">
+              {this.props.filterDate ? &lt;SortByAlphaIcon /> : &lt;EventIcon />}
+            &lt;/IconButton>
+          &lt;/Toolbar>
+        &lt;/AppBar>
 
         {/* Display of all user conversations */}
         {this.props.chats.length > 0 ? (
-          <List>
+          &lt;List>
             {this.props.chats
               .sort((a, b) => {
                 //Sorting by date or name
@@ -122,21 +150,21 @@ class MessageList extends React.Component {
               .map((_chat, _index) => {
                 //For each conversation
                 return (
-                  <div key={_index}>
-                    <ListItem
+                  &lt;div key={_index}>
+                    &lt;ListItem
                       onClick={() => this.selectChat(_index)}
                       className={classes.listItem}
                       selected={this.props.selectedChatIndex === _index}
                       alignItems="flex-start"
                     >
-                      <ListItemAvatar
+                      &lt;ListItemAvatar
                         style={{
                           display: "flex",
                           justifyContent: "center",
                           margin: 0,
                         }}
                       >
-                        <Avatar
+                        &lt;Avatar
                           src={
                             //Load profile image
                             this.props.users.length > 1
@@ -159,13 +187,13 @@ class MessageList extends React.Component {
                               .split("")[0]
                               .toUpperCase()
                           }
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText
+                        &lt;/Avatar>
+                      &lt;/ListItemAvatar>
+                      &lt;ListItemText
                         className={classes.itemText}
                         primary={
-                          <React.Fragment>
-                            <Typography
+                          &lt;React.Fragment>
+                            &lt;Typography
                               component="span"
                               color="textPrimary"
                               className={classes.typoPrimary}
@@ -175,12 +203,12 @@ class MessageList extends React.Component {
                                   _user => _user !== this.props.userEmail
                                 )[0]
                               }
-                            </Typography>
-                          </React.Fragment>
+                            &lt;/Typography>
+                          &lt;/React.Fragment>
                         }
                         secondary={
-                          <React.Fragment>
-                            <Typography
+                          &lt;React.Fragment>
+                            &lt;Typography
                               component="span"
                               color="textPrimary"
                               className={classes.typoSecondary}
@@ -191,30 +219,30 @@ class MessageList extends React.Component {
                                   _chat.messages.length - 1
                                 ].message.substring(0, 30) + " ..."
                               }
-                            </Typography>
-                          </React.Fragment>
+                            &lt;/Typography>
+                          &lt;/React.Fragment>
                         }
                       />
                       {
                         //If the conversation has not been read, a notification icon is displayed
-                        _chat.receiverHasRead === false &&
+                        _chat.receiverHasRead === false &amp;&amp;
                         !this.userIsSender(_chat) ? (
-                          <ListItemIcon>
-                            <NotificationImportant
+                          &lt;ListItemIcon>
+                            &lt;NotificationImportant
                               className={classes.unreadMessage}
-                            ></NotificationImportant>
-                          </ListItemIcon>
+                            >&lt;/NotificationImportant>
+                          &lt;/ListItemIcon>
                         ) : null
                       }
-                    </ListItem>
+                    &lt;/ListItem>
                     {/* Line between conversations */}
-                    <Divider />
-                  </div>
+                    &lt;Divider />
+                  &lt;/div>
                 );
               })}
-          </List>
+          &lt;/List>
         ) : null}
-      </div>
+      &lt;/div>
     );
   }
   /**
@@ -240,3 +268,26 @@ class MessageList extends React.Component {
 }
 
 export default withStyles(styles)(MessageList);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DashboardComponent.html">DashboardComponent</a></li><li><a href="DocumentComponent.html">DocumentComponent</a></li><li><a href="DocumentImportComponent.html">DocumentImportComponent</a></li><li><a href="DocumentTableComponent.html">DocumentTableComponent</a></li><li><a href="LoginComponent.html">LoginComponent</a></li><li><a href="MessageComponent.html">MessageComponent</a></li><li><a href="MessageList.html">MessageList</a></li><li><a href="MessageTextBox.html">MessageTextBox</a></li><li><a href="MessageView.html">MessageView</a></li><li><a href="NavBar.html">NavBar</a></li><li><a href="NewMessage.html">NewMessage</a></li><li><a href="ProfileComponent.html">ProfileComponent</a></li><li><a href="RegisterComponent.html">RegisterComponent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Copyright">Copyright</a></li><li><a href="global.html#createData">createData</a></li><li><a href="global.html#descendingComparator">descendingComparator</a></li><li><a href="global.html#EnhancedTableHead">EnhancedTableHead</a></li><li><a href="global.html#getComparator">getComparator</a></li><li><a href="global.html#getStyles">getStyles</a></li><li><a href="global.html#handleClick">handleClick</a></li><li><a href="global.html#newMessage">newMessage</a></li><li><a href="global.html#stableSort">stableSort</a></li><li><a href="global.html#UserComponent">UserComponent</a></li><li><a href="global.html#useStyles">useStyles</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Mar 03 2021 23:19:57 GMT+0100 (heure normale d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

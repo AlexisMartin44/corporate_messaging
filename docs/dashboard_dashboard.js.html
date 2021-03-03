@@ -1,4 +1,32 @@
-import React from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: dashboard/dashboard.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: dashboard/dashboard.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
 import { withStyles, Tabs, Tab, Paper } from "@material-ui/core";
 import styles from "../../styles/dashboard/dashboardStyle";
 import ChatIcon from "@material-ui/icons/Chat";
@@ -45,17 +73,17 @@ class DashboardComponent extends React.Component {
 
     return (
       //Depending on the value of the state, displays different components
-      <div>
+      &lt;div>
         {
           //MessageComponent, that allows to view or send messages
-          this.state.value === 0 && (
-            <MessageComponent history={this.props.history} />
+          this.state.value === 0 &amp;&amp; (
+            &lt;MessageComponent history={this.props.history} />
           )
         }
         {
           //DocumentComponent, allows to consult the files concerning a workstation or a service, but also to add some if the user is an admin
-          this.state.value === 1 && (
-            <DocumentComponent
+          this.state.value === 1 &amp;&amp; (
+            &lt;DocumentComponent
               isAdmin={this.state.userData.isAdmin}
               service={this.state.userData.service}
               position={this.state.userData.position}
@@ -64,13 +92,13 @@ class DashboardComponent extends React.Component {
         }
         {
           //ProfileComponent, allows you to view your profile information and change your profile picture
-          this.state.value === 2 && (
-            <ProfileComponent toShow={false} userData={this.state.userData} />
+          this.state.value === 2 &amp;&amp; (
+            &lt;ProfileComponent toShow={false} userData={this.state.userData} />
           )
         }
         {/* Tabs at the bottom of the screen, allows to change the daughter component, so change tabs */}
-        <Paper square className={classes.root}>
-          <Tabs
+        &lt;Paper square className={classes.root}>
+          &lt;Tabs
             value={this.state.value}
             onChange={handleChange}
             variant="fullWidth"
@@ -78,17 +106,17 @@ class DashboardComponent extends React.Component {
             textColor="secondary"
             aria-label="icon label tabs example"
           >
-            <Tab icon={<ChatIcon />} label="Messages" />
-            <Tab icon={<InsertDriveFileIcon />} label="Documents" />
-            <Tab icon={<PersonPinIcon />} label="Profile" />
-          </Tabs>
-        </Paper>
+            &lt;Tab icon={&lt;ChatIcon />} label="Messages" />
+            &lt;Tab icon={&lt;InsertDriveFileIcon />} label="Documents" />
+            &lt;Tab icon={&lt;PersonPinIcon />} label="Profile" />
+          &lt;/Tabs>
+        &lt;/Paper>
         {/* NavBar at the top of the screen, allows you to log out and see the applications requests if the user is an admin.  */}
-        <NavBar
+        &lt;NavBar
           history={this.props.history}
           applicationRequests={this.state.applicationRequests}
         />
-      </div>
+      &lt;/div>
     );
   }
 
@@ -153,3 +181,26 @@ class DashboardComponent extends React.Component {
 
 //export the component with his styles
 export default withStyles(styles)(DashboardComponent);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DashboardComponent.html">DashboardComponent</a></li><li><a href="DocumentComponent.html">DocumentComponent</a></li><li><a href="DocumentImportComponent.html">DocumentImportComponent</a></li><li><a href="DocumentTableComponent.html">DocumentTableComponent</a></li><li><a href="LoginComponent.html">LoginComponent</a></li><li><a href="MessageComponent.html">MessageComponent</a></li><li><a href="MessageList.html">MessageList</a></li><li><a href="MessageTextBox.html">MessageTextBox</a></li><li><a href="MessageView.html">MessageView</a></li><li><a href="NavBar.html">NavBar</a></li><li><a href="NewMessage.html">NewMessage</a></li><li><a href="ProfileComponent.html">ProfileComponent</a></li><li><a href="RegisterComponent.html">RegisterComponent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Copyright">Copyright</a></li><li><a href="global.html#createData">createData</a></li><li><a href="global.html#descendingComparator">descendingComparator</a></li><li><a href="global.html#EnhancedTableHead">EnhancedTableHead</a></li><li><a href="global.html#getComparator">getComparator</a></li><li><a href="global.html#getStyles">getStyles</a></li><li><a href="global.html#handleClick">handleClick</a></li><li><a href="global.html#newMessage">newMessage</a></li><li><a href="global.html#stableSort">stableSort</a></li><li><a href="global.html#UserComponent">UserComponent</a></li><li><a href="global.html#useStyles">useStyles</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Mar 03 2021 23:19:57 GMT+0100 (heure normale d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

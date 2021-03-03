@@ -1,4 +1,32 @@
-import React from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: dashboard/profile.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: dashboard/profile.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
 import styles from "../../styles/dashboard/profileStyle";
 import { withStyles } from "@material-ui/core/styles";
 import firebase from "firebase";
@@ -102,31 +130,31 @@ class ProfileComponent extends React.Component {
     const date = new Date(this.props.userData.date);
     return (
       //The display is different depending on the parent component
-      <div className={this.props.toShow ? classes.rootToShow : classes.root}>
-        <Card className={this.props.toShow ? classes.cardToShow : classes.card}>
-          <CardHeader title="Profile" className={classes.cardHeader} />
-          <Divider variant="middle" />
-          <CardContent className={classes.cardContent}>
+      &lt;div className={this.props.toShow ? classes.rootToShow : classes.root}>
+        &lt;Card className={this.props.toShow ? classes.cardToShow : classes.card}>
+          &lt;CardHeader title="Profile" className={classes.cardHeader} />
+          &lt;Divider variant="middle" />
+          &lt;CardContent className={classes.cardContent}>
             {
               //Displays data such as user photo, first and last name, and whether the user is admin or not
               this.props.userData.isAdmin ? (
-                <Typography variant="h5" className={classes.typo}>
+                &lt;Typography variant="h5" className={classes.typo}>
                   Admin
-                </Typography>
+                &lt;/Typography>
               ) : (
-                <div></div>
+                &lt;div>&lt;/div>
               )
             }
             {
               //It is possible to change your profile image only by looking at your profile
               this.props.toShow ? (
-                <Avatar
+                &lt;Avatar
                   src={this.props.userData.image}
                   className={classes.largeToShow}
                 />
               ) : (
-                <div>
-                  <input
+                &lt;div>
+                  &lt;input
                     accept="image/*"
                     className={classes.input}
                     id="contained-button-file"
@@ -135,102 +163,102 @@ class ProfileComponent extends React.Component {
                       this.handleChange(e.target.files);
                     }}
                   />
-                  <label htmlFor="contained-button-file">
-                    <Button
+                  &lt;label htmlFor="contained-button-file">
+                    &lt;Button
                       className={classes.button}
                       color="primary"
                       component="span"
                     >
-                      <Avatar
+                      &lt;Avatar
                         src={this.props.userData.image}
                         className={classes.large}
                       />
-                    </Button>
-                  </label>
-                </div>
+                    &lt;/Button>
+                  &lt;/label>
+                &lt;/div>
               )
             }
-            <Typography
+            &lt;Typography
               className={this.props.toShow ? classes.typoToShow : classes.typo}
               variant="h4"
             >
               {this.props.userData.firstName} {this.props.userData.lastName}
-            </Typography>
-          </CardContent>
-        </Card>
-        <div
+            &lt;/Typography>
+          &lt;/CardContent>
+        &lt;/Card>
+        &lt;div
           className={
             this.props.toShow ? classes.secondPartToShow : classes.secondPart
           }
         >
-          <Card
+          &lt;Card
             className={
               this.props.toShow ? classes.secondCardToShow : classes.secondCard
             }
           >
-            <CardHeader title="Information" className={classes.cardHeader} />
-            <Divider variant="middle" />
-            <CardContent>
+            &lt;CardHeader title="Information" className={classes.cardHeader} />
+            &lt;Divider variant="middle" />
+            &lt;CardContent>
               {/* Display of data such as service, position, number of files, number of conversations, date of creation */}
-              <div className={classes.element}>
-                <Typography className={classes.typoElement} variant="h6">
+              &lt;div className={classes.element}>
+                &lt;Typography className={classes.typoElement} variant="h6">
                   Service :
-                </Typography>
-                <Typography className={classes.typoElement} variant="body1">
+                &lt;/Typography>
+                &lt;Typography className={classes.typoElement} variant="body1">
                   {this.props.userData.service}
-                </Typography>
-              </div>
-              <div className={classes.element}>
-                <Typography className={classes.typoElement} variant="h6">
+                &lt;/Typography>
+              &lt;/div>
+              &lt;div className={classes.element}>
+                &lt;Typography className={classes.typoElement} variant="h6">
                   Position :
-                </Typography>
-                <Typography className={classes.typoElement} variant="body1">
+                &lt;/Typography>
+                &lt;Typography className={classes.typoElement} variant="body1">
                   {this.props.userData.position}
-                </Typography>
-              </div>
-              <div className={classes.element}>
-                <Typography className={classes.typoElement} variant="h6">
+                &lt;/Typography>
+              &lt;/div>
+              &lt;div className={classes.element}>
+                &lt;Typography className={classes.typoElement} variant="h6">
                   Registration :
-                </Typography>
-                <Typography className={classes.typoElement} variant="body1">
+                &lt;/Typography>
+                &lt;Typography className={classes.typoElement} variant="body1">
                   {date.toLocaleDateString()}
-                </Typography>
-              </div>
-            </CardContent>
-            <Divider variant="middle" />
-            <CardContent
+                &lt;/Typography>
+              &lt;/div>
+            &lt;/CardContent>
+            &lt;Divider variant="middle" />
+            &lt;CardContent
               className={this.props.toShow ? classes.secondCardContent : null}
             >
-              <div className={classes.stats}>
-                <Typography variant="h6">{this.state.chatsLength}</Typography>
-                <Typography className={classes.marginLeft} variant="body1">
+              &lt;div className={classes.stats}>
+                &lt;Typography variant="h6">{this.state.chatsLength}&lt;/Typography>
+                &lt;Typography className={classes.marginLeft} variant="body1">
                   conversation
-                </Typography>
-              </div>
-              <div className={classes.stats}>
-                <Typography variant="h6">
+                &lt;/Typography>
+              &lt;/div>
+              &lt;div className={classes.stats}>
+                &lt;Typography variant="h6">
                   {this.state.positionLength + this.state.serviceLength}
-                </Typography>
-                <Typography className={classes.marginLeft} variant="body1">
+                &lt;/Typography>
+                &lt;Typography className={classes.marginLeft} variant="body1">
                   files
-                </Typography>
-              </div>
-            </CardContent>
-          </Card>
+                &lt;/Typography>
+              &lt;/div>
+            &lt;/CardContent>
+          &lt;/Card>
           {this.props.toShow ? (
-            <Button
+            &lt;Button
               onClick={this.newMessage}
               className={classes.sendButton}
               variant="contained"
               color="primary"
             >
-              Message <SendIcon className={classes.sendIcon} />
-            </Button>
+              Message &lt;SendIcon className={classes.sendIcon} />
+            &lt;/Button>
           ) : (
-            <div></div>
+            &lt;div>&lt;/div>
           )}
-        </div>
-      </div>
+        &lt;/div>
+      &lt;/div>
     );
   }
 
@@ -287,3 +315,26 @@ class ProfileComponent extends React.Component {
 
 //export the component with his styles
 export default withStyles(styles)(ProfileComponent);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DashboardComponent.html">DashboardComponent</a></li><li><a href="DocumentComponent.html">DocumentComponent</a></li><li><a href="DocumentImportComponent.html">DocumentImportComponent</a></li><li><a href="DocumentTableComponent.html">DocumentTableComponent</a></li><li><a href="LoginComponent.html">LoginComponent</a></li><li><a href="MessageComponent.html">MessageComponent</a></li><li><a href="MessageList.html">MessageList</a></li><li><a href="MessageTextBox.html">MessageTextBox</a></li><li><a href="MessageView.html">MessageView</a></li><li><a href="NavBar.html">NavBar</a></li><li><a href="NewMessage.html">NewMessage</a></li><li><a href="ProfileComponent.html">ProfileComponent</a></li><li><a href="RegisterComponent.html">RegisterComponent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Copyright">Copyright</a></li><li><a href="global.html#createData">createData</a></li><li><a href="global.html#descendingComparator">descendingComparator</a></li><li><a href="global.html#EnhancedTableHead">EnhancedTableHead</a></li><li><a href="global.html#getComparator">getComparator</a></li><li><a href="global.html#getStyles">getStyles</a></li><li><a href="global.html#handleClick">handleClick</a></li><li><a href="global.html#newMessage">newMessage</a></li><li><a href="global.html#stableSort">stableSort</a></li><li><a href="global.html#UserComponent">UserComponent</a></li><li><a href="global.html#useStyles">useStyles</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Mar 03 2021 23:19:57 GMT+0100 (heure normale d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,4 +1,32 @@
-import React from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: documents/documentsImport.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: documents/documentsImport.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
 import styles from "../../styles/documents/documentsImportStyle";
 import { withStyles } from "@material-ui/core/styles";
 import {
@@ -17,7 +45,7 @@ import firebase from "firebase";
 import MuiAlert from "@material-ui/lab/Alert";
 
 function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
+  return &lt;MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 //List of company positions
@@ -87,7 +115,7 @@ class DocumentImportComponent extends React.Component {
    */
   handleSave = async () => {
     if (
-      this.state.selectValue != "" &&
+      this.state.selectValue != "" &amp;&amp;
       this.state.destinationFiles.length > 0
     ) {
       let file = this.state.files[0];
@@ -148,64 +176,64 @@ class DocumentImportComponent extends React.Component {
     //Styles classes
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
-        <FormControl className={classes.formControl}>
+      &lt;div className={classes.root}>
+        &lt;FormControl className={classes.formControl}>
           {/* First input, to choose between service or position  */}
-          <InputLabel id="destinationLabel">Destination</InputLabel>
-          <Select
+          &lt;InputLabel id="destinationLabel">Destination&lt;/InputLabel>
+          &lt;Select
             labelId="destinationLabel"
             id="destination"
             value={this.state.selectValue}
             onChange={e => this.handleChange("destination", e)}
           >
-            <MenuItem value={"position"}>Position</MenuItem>
-            <MenuItem value={"service"}>Service</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl className={classes.formControl}>
+            &lt;MenuItem value={"position"}>Position&lt;/MenuItem>
+            &lt;MenuItem value={"service"}>Service&lt;/MenuItem>
+          &lt;/Select>
+        &lt;/FormControl>
+        &lt;FormControl className={classes.formControl}>
           {/* Second input, to choose between services or positions */}
-          <InputLabel id="destinationNameLabel">Destination Name</InputLabel>
-          <Select
+          &lt;InputLabel id="destinationNameLabel">Destination Name&lt;/InputLabel>
+          &lt;Select
             labelId="destinationNameLabel"
             id="destinationName"
             multiple
             value={this.state.destinationFiles}
             onChange={e => this.handleChange("destinationName", e)}
-            input={<Input />}
+            input={&lt;Input />}
           >
             {this.state.selectValue == "service"
               ? services.map(name => (
-                  <MenuItem
+                  &lt;MenuItem
                     key={name}
                     value={name}
                     style={getStyles(name, this.state.destinationFiles)}
                   >
                     {name}
-                  </MenuItem>
+                  &lt;/MenuItem>
                 ))
               : positions.map(name => (
-                  <MenuItem
+                  &lt;MenuItem
                     key={name}
                     value={name}
                     style={getStyles(name, this.state.destinationFiles)}
                   >
                     {name}
-                  </MenuItem>
+                  &lt;/MenuItem>
                 ))}
-          </Select>
-        </FormControl>
+          &lt;/Select>
+        &lt;/FormControl>
 
-        <label htmlFor="contained-button-file">
+        &lt;label htmlFor="contained-button-file">
           {/* Button to select files to add */}
-          <IconButton
+          &lt;IconButton
             color="primary"
             aria-label="upload picture"
             component="span"
           >
-            <PictureAsPdfIcon />
-          </IconButton>
-        </label>
-        <input
+            &lt;PictureAsPdfIcon />
+          &lt;/IconButton>
+        &lt;/label>
+        &lt;input
           accept=".pdf"
           className={classes.input}
           id="contained-button-file"
@@ -215,37 +243,37 @@ class DocumentImportComponent extends React.Component {
             this.handleChange("files", e.target.files);
           }}
         />
-        <Button
+        &lt;Button
           // Button to send files
           onClick={this.handleSave}
           variant="contained"
           color="primary"
           component="span"
-          startIcon={<CloudUploadIcon />}
+          startIcon={&lt;CloudUploadIcon />}
         >
           Upload
-        </Button>
-        <div className={classes.snackbar}>
-          <Snackbar
+        &lt;/Button>
+        &lt;div className={classes.snackbar}>
+          &lt;Snackbar
             open={this.state.importSuccess}
             autoHideDuration={6000}
             onClose={this.handleCloseSuccess}
           >
-            <Alert onClose={this.handleCloseSuccess} severity="success">
+            &lt;Alert onClose={this.handleCloseSuccess} severity="success">
               Successfully imported document
-            </Alert>
-          </Snackbar>
-          <Snackbar
+            &lt;/Alert>
+          &lt;/Snackbar>
+          &lt;Snackbar
             open={this.state.importError}
             autoHideDuration={6000}
             onClose={this.handleCloseError}
           >
-            <Alert onClose={this.handleCloseError} severity="error">
+            &lt;Alert onClose={this.handleCloseError} severity="error">
               Error in file import
-            </Alert>
-          </Snackbar>
-        </div>
-      </div>
+            &lt;/Alert>
+          &lt;/Snackbar>
+        &lt;/div>
+      &lt;/div>
     );
   }
 
@@ -278,3 +306,26 @@ class DocumentImportComponent extends React.Component {
 
 //export the component with his styles
 export default withStyles(styles)(DocumentImportComponent);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DashboardComponent.html">DashboardComponent</a></li><li><a href="DocumentComponent.html">DocumentComponent</a></li><li><a href="DocumentImportComponent.html">DocumentImportComponent</a></li><li><a href="DocumentTableComponent.html">DocumentTableComponent</a></li><li><a href="LoginComponent.html">LoginComponent</a></li><li><a href="MessageComponent.html">MessageComponent</a></li><li><a href="MessageList.html">MessageList</a></li><li><a href="MessageTextBox.html">MessageTextBox</a></li><li><a href="MessageView.html">MessageView</a></li><li><a href="NavBar.html">NavBar</a></li><li><a href="NewMessage.html">NewMessage</a></li><li><a href="ProfileComponent.html">ProfileComponent</a></li><li><a href="RegisterComponent.html">RegisterComponent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Copyright">Copyright</a></li><li><a href="global.html#createData">createData</a></li><li><a href="global.html#descendingComparator">descendingComparator</a></li><li><a href="global.html#EnhancedTableHead">EnhancedTableHead</a></li><li><a href="global.html#getComparator">getComparator</a></li><li><a href="global.html#getStyles">getStyles</a></li><li><a href="global.html#handleClick">handleClick</a></li><li><a href="global.html#newMessage">newMessage</a></li><li><a href="global.html#stableSort">stableSort</a></li><li><a href="global.html#UserComponent">UserComponent</a></li><li><a href="global.html#useStyles">useStyles</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Mar 03 2021 23:19:57 GMT+0100 (heure normale d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

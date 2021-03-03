@@ -1,4 +1,32 @@
-import React from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: messages/messageComponent.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: messages/messageComponent.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
 import NewMessage from "./newMessage";
 import MessageList from "./messageList";
 import MessageView from "./messageView";
@@ -60,8 +88,8 @@ class MessageComponent extends React.Component {
     const { classes } = this.props;
     if (this.state.email) {
       return (
-        <div className={classes.root} id="dashboard-container">
-          <MessageList
+        &lt;div className={classes.root} id="dashboard-container">
+          &lt;MessageList
             changeFilter={this.changeFilter}
             filterDate={this.state.filterDate}
             users={this.state.users}
@@ -72,11 +100,11 @@ class MessageComponent extends React.Component {
             selectedChatIndex={this.state.selectedChat}
             newChatBtnFn={this.newChatBtnClicked}
             setUserToShow={this.setUserToShow}
-          ></MessageList>
+          >&lt;/MessageList>
           {this.state.newChatFormVisible == true ||
           this.state.userVisible == true ? null : this.state.selectedChat !=
             null ? (
-            <MessageView
+            &lt;MessageView
               user={this.state.email}
               friend={
                 this.state.users.filter(
@@ -88,34 +116,34 @@ class MessageComponent extends React.Component {
                 )[0]
               }
               chat={this.state.chats[this.state.selectedChat]}
-            ></MessageView>
+            >&lt;/MessageView>
           ) : null}
           {this.state.userVisible ? (
-            <ProfileComponent
+            &lt;ProfileComponent
               newChatBtnFn={this.newChatBtnClicked}
               setUserToShow={this.setUserToShow}
               toShow={true}
               userData={this.state.userToShow}
             />
           ) : null}
-          {this.state.selectedChat !== null &&
+          {this.state.selectedChat !== null &amp;&amp;
           !this.state.newChatFormVisible ? (
-            <MessageTextBox
+            &lt;MessageTextBox
               userClickedInputFn={this.messageRead}
               submitMessageFn={this.submitMessage}
-            ></MessageTextBox>
+            >&lt;/MessageTextBox>
           ) : null}
           {this.state.newChatFormVisible ? (
-            <NewMessage
+            &lt;NewMessage
               user={this.state.userToShow}
               goToChatFn={this.goToChat}
               newChatSubmitFn={this.newChatSubmit}
-            ></NewMessage>
+            >&lt;/NewMessage>
           ) : null}
-        </div>
+        &lt;/div>
       );
     } else {
-      return <div>LOADING....</div>;
+      return &lt;div>LOADING....&lt;/div>;
     }
   }
 
@@ -297,3 +325,26 @@ class MessageComponent extends React.Component {
 }
 
 export default withStyles(styles)(MessageComponent);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DashboardComponent.html">DashboardComponent</a></li><li><a href="DocumentComponent.html">DocumentComponent</a></li><li><a href="DocumentImportComponent.html">DocumentImportComponent</a></li><li><a href="DocumentTableComponent.html">DocumentTableComponent</a></li><li><a href="LoginComponent.html">LoginComponent</a></li><li><a href="MessageComponent.html">MessageComponent</a></li><li><a href="MessageList.html">MessageList</a></li><li><a href="MessageTextBox.html">MessageTextBox</a></li><li><a href="MessageView.html">MessageView</a></li><li><a href="NavBar.html">NavBar</a></li><li><a href="NewMessage.html">NewMessage</a></li><li><a href="ProfileComponent.html">ProfileComponent</a></li><li><a href="RegisterComponent.html">RegisterComponent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Copyright">Copyright</a></li><li><a href="global.html#createData">createData</a></li><li><a href="global.html#descendingComparator">descendingComparator</a></li><li><a href="global.html#EnhancedTableHead">EnhancedTableHead</a></li><li><a href="global.html#getComparator">getComparator</a></li><li><a href="global.html#getStyles">getStyles</a></li><li><a href="global.html#handleClick">handleClick</a></li><li><a href="global.html#newMessage">newMessage</a></li><li><a href="global.html#stableSort">stableSort</a></li><li><a href="global.html#UserComponent">UserComponent</a></li><li><a href="global.html#useStyles">useStyles</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Mar 03 2021 23:19:57 GMT+0100 (heure normale d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

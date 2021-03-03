@@ -1,4 +1,32 @@
-import React from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: documents/documentTable.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: documents/documentTable.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
 import styles from "../../styles/documents/documentTableStyle";
 import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -32,8 +60,8 @@ function createData(name, date, url) {
  */
 function descendingComparator(a, b, orderBy) {
   //If the field correspond to a string, we compare with a lowerCase
-  if (typeof a[orderBy] == "string" && typeof b[orderBy] == "string") {
-    if (b[orderBy].toLowerCase() < a[orderBy].toLowerCase()) {
+  if (typeof a[orderBy] == "string" &amp;&amp; typeof b[orderBy] == "string") {
+    if (b[orderBy].toLowerCase() &lt; a[orderBy].toLowerCase()) {
       return -1;
     }
     if (b[orderBy].toLowerCase() > a[orderBy].toLowerCase()) {
@@ -41,7 +69,7 @@ function descendingComparator(a, b, orderBy) {
     }
     return 0;
   } else {
-    if (b[orderBy] < a[orderBy]) {
+    if (b[orderBy] &lt; a[orderBy]) {
       return -1;
     }
     if (b[orderBy] > a[orderBy]) {
@@ -102,16 +130,16 @@ function EnhancedTableHead(props) {
   };
 
   return (
-    <TableHead>
-      <TableRow>
+    &lt;TableHead>
+      &lt;TableRow>
         {headCells.map(headCell => (
-          <TableCell
+          &lt;TableCell
             key={headCell.id}
             align={"center"}
             padding={"default"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
-            <TableSortLabel
+            &lt;TableSortLabel
               className={classes.tableLabel}
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : "asc"}
@@ -119,15 +147,15 @@ function EnhancedTableHead(props) {
             >
               {headCell.label}
               {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>
+                &lt;span className={classes.visuallyHidden}>
                   {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </span>
+                &lt;/span>
               ) : null}
-            </TableSortLabel>
-          </TableCell>
+            &lt;/TableSortLabel>
+          &lt;/TableCell>
         ))}
-      </TableRow>
-    </TableHead>
+      &lt;/TableRow>
+    &lt;/TableHead>
   );
 }
 
@@ -172,9 +200,9 @@ class DocumentTableComponent extends React.Component {
       return createData(
         file.name,
         file.date,
-        <Button variant="contained" color="secondary" href={file.url}>
+        &lt;Button variant="contained" color="secondary" href={file.url}>
           Open
-        </Button>
+        &lt;/Button>
       );
     });
 
@@ -186,7 +214,7 @@ class DocumentTableComponent extends React.Component {
      */
     const handleRequestSort = (event, property) => {
       const isAsc =
-        this.state.orderBy === property && this.state.order === "asc";
+        this.state.orderBy === property &amp;&amp; this.state.order === "asc";
       this.setState({ order: isAsc ? "desc" : "asc" });
       this.setState({ orderBy: property });
     };
@@ -220,26 +248,26 @@ class DocumentTableComponent extends React.Component {
       );
 
     return (
-      <div className={classes.centerRoot}>
-        <div className={classes.root}>
+      &lt;div className={classes.centerRoot}>
+        &lt;div className={classes.root}>
           {/* We all put in a paper to give it style */}
-          <Paper className={classes.paper}>
-            <TableContainer>
-              <Table
+          &lt;Paper className={classes.paper}>
+            &lt;TableContainer>
+              &lt;Table
                 className={classes.table}
                 aria-labelledby="tableTitle"
                 size={"medium"}
                 aria-label="enhanced table"
               >
                 {/* Table header, with the name of the different fields to sort by */}
-                <EnhancedTableHead
+                &lt;EnhancedTableHead
                   classes={classes}
                   order={this.state.order}
                   orderBy={this.state.orderBy}
                   onRequestSort={handleRequestSort}
                   rowCount={rows.length}
                 />
-                <TableBody>
+                &lt;TableBody>
                   {stableSort(
                     rows,
                     getComparator(this.state.order, this.state.orderBy)
@@ -255,35 +283,35 @@ class DocumentTableComponent extends React.Component {
                       const date = new Date(row.date);
 
                       return (
-                        <TableRow hover tabIndex={-1} key={row.name}>
-                          <TableCell
+                        &lt;TableRow hover tabIndex={-1} key={row.name}>
+                          &lt;TableCell
                             component="th"
                             id={labelId}
                             scope="row"
                             padding="default"
                           >
                             {row.name}
-                          </TableCell>
-                          <TableCell align="center">
+                          &lt;/TableCell>
+                          &lt;TableCell align="center">
                             {date.toLocaleString()}
-                          </TableCell>
-                          <TableCell align="center">{row.url}</TableCell>
-                        </TableRow>
+                          &lt;/TableCell>
+                          &lt;TableCell align="center">{row.url}&lt;/TableCell>
+                        &lt;/TableRow>
                       );
                     })}
                   {
                     //Generates empty rows
-                    emptyRows > 0 && (
-                      <TableRow style={{ height: 53 * emptyRows }}>
-                        <TableCell colSpan={6} />
-                      </TableRow>
+                    emptyRows > 0 &amp;&amp; (
+                      &lt;TableRow style={{ height: 53 * emptyRows }}>
+                        &lt;TableCell colSpan={6} />
+                      &lt;/TableRow>
                     )
                   }
-                </TableBody>
-              </Table>
-            </TableContainer>
+                &lt;/TableBody>
+              &lt;/Table>
+            &lt;/TableContainer>
             {/* Table footer, with the possibility to change the number of rows per page, or to change pages */}
-            <TablePagination
+            &lt;TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
               count={rows.length}
@@ -292,12 +320,35 @@ class DocumentTableComponent extends React.Component {
               onChangePage={handleChangePage}
               onChangeRowsPerPage={handleChangeRowsPerPage}
             />
-          </Paper>
-        </div>
-      </div>
+          &lt;/Paper>
+        &lt;/div>
+      &lt;/div>
     );
   }
 }
 
 //export the component with his styles
 export default withStyles(styles)(DocumentTableComponent);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DashboardComponent.html">DashboardComponent</a></li><li><a href="DocumentComponent.html">DocumentComponent</a></li><li><a href="DocumentImportComponent.html">DocumentImportComponent</a></li><li><a href="DocumentTableComponent.html">DocumentTableComponent</a></li><li><a href="LoginComponent.html">LoginComponent</a></li><li><a href="MessageComponent.html">MessageComponent</a></li><li><a href="MessageList.html">MessageList</a></li><li><a href="MessageTextBox.html">MessageTextBox</a></li><li><a href="MessageView.html">MessageView</a></li><li><a href="NavBar.html">NavBar</a></li><li><a href="NewMessage.html">NewMessage</a></li><li><a href="ProfileComponent.html">ProfileComponent</a></li><li><a href="RegisterComponent.html">RegisterComponent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Copyright">Copyright</a></li><li><a href="global.html#createData">createData</a></li><li><a href="global.html#descendingComparator">descendingComparator</a></li><li><a href="global.html#EnhancedTableHead">EnhancedTableHead</a></li><li><a href="global.html#getComparator">getComparator</a></li><li><a href="global.html#getStyles">getStyles</a></li><li><a href="global.html#handleClick">handleClick</a></li><li><a href="global.html#newMessage">newMessage</a></li><li><a href="global.html#stableSort">stableSort</a></li><li><a href="global.html#UserComponent">UserComponent</a></li><li><a href="global.html#useStyles">useStyles</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Mar 03 2021 23:19:57 GMT+0100 (heure normale d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

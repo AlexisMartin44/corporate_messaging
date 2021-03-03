@@ -10,7 +10,7 @@ import LoginComponent from "./components/login&register/login";
 import MessageComponent from "./components/messages/messageComponent";
 import DashboardComponent from "./components/dashboard/dashboard";
 
-require("firebase/firestore"); // Required for side-effects?????
+require("firebase/firestore");
 
 firebase.initializeApp({
   apiKey: "AIzaSyA4q3i0kbwLYXW2S-KsMJ0-cEkSHVaTF2o",
@@ -22,7 +22,6 @@ firebase.initializeApp({
   measurementId: "G-DTGBYTYQJG",
 });
 
-
 const routing = (
   <ThemeProvider theme={theme}>
     <BrowserRouter>
@@ -30,14 +29,10 @@ const routing = (
       <Route path="/login" component={LoginComponent}></Route>
       <Route path="/register" component={RegisterComponent}></Route>
       <Route path="/dashboard" component={DashboardComponent}></Route>
-      <Route path="/messages" component={MessageComponent}></Route>
     </BrowserRouter>
   </ThemeProvider>
 );
 
 ReactDOM.render(routing, document.getElementById("root"));
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

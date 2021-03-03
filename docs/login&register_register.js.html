@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: login&register/register.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: login&register/register.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Link } from "react-router-dom";
+import React from "react";
+import firebase from "firebase";
+import useStyles from "../../styles/login&amp;register/registerStyle";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Copyright from "./../partials/copyright";
+import withStyles from "@material-ui/core/styles/withStyles";
+import joi from "joi";
+import {
+  Avatar,
+  TextField,
+  Container,
+  Grid,
+  CssBaseline,
+  Typography,
+  Button,
+  Box,
+} from "@material-ui/core";
+
+require("joi");
+//Joi schema that allows to validate inputs values
+const schema = joi.object().keys({
+  email: joi
+    .string()
+    .email({ tlds: { allow: false } })
+    .min(3)
+    .max(45)
+    .required(),
+  service: joi.string().min(3).max(45).required(),
+  position: joi.string().min(3).max(45).required(),
+  firstName: joi.string().min(3).max(45).required(),
+  lastName: joi.string().min(3).max(45).required(),
+  password: joi
+    .string()
+    .regex(
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,25})$/
+    )
+    .required(),
+  date: joi.any().required(),
+});
+
+/**
+ * @classdesc Register component, allows to send a register request to admins
+ * @class
+ * @extends React.Component  */
+class RegisterComponent extends React.Component {
+  constructor() {
+    super();
+    //State that contains input values
+    this.state = {
+      email: null,
+      firstName: null,
+      lastName: null,
+      position: null,
+      service: null,
+      password: null,
+      passwordConfirmation: null,
+      signupError: "",
+    };
+  }
+
+  /**
+   * @desc Render method of RegisterComponent
+   * @function
+   */
+  render() {
+    const { classes } = this.props;
+    return (
+      &lt;Container component="main" maxWidth="xs">
+        &lt;CssBaseline />
+        &lt;div className={classes.paper}>
+          &lt;Avatar className={classes.avatar}>
+            &lt;LockOutlinedIcon />
+          &lt;/Avatar>
+          &lt;Typography component="h1" variant="h5">
+            Register
+          &lt;/Typography>
+          &lt;form className={classes.form} onSubmit={e => this.submitSignup(e)}>
+            &lt;Grid container spacing={2}>
+              &lt;Grid item xs={12} sm={6}>
+                &lt;TextField
+                  autoComplete="firstName"
+                  name="firstName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                  onChange={e => this.userTyping("firstName", e)}
+                />
+              &lt;/Grid>
+              &lt;Grid item xs={12} sm={6}>
+                &lt;TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="lastName"
+                  onChange={e => this.userTyping("lastName", e)}
+                />
+              &lt;/Grid>
+              &lt;Grid item xs={12}>
+                &lt;TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  onChange={e => this.userTyping("email", e)}
+                />
+              &lt;/Grid>
+              &lt;Grid item xs={12}>
+                &lt;TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="position"
+                  label="Position"
+                  name="position"
+                  autoComplete="position"
+                  onChange={e => this.userTyping("position", e)}
+                />
+              &lt;/Grid>
+              &lt;Grid item xs={12}>
+                &lt;TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="service"
+                  label="Service"
+                  name="service"
+                  autoComplete="service"
+                  onChange={e => this.userTyping("service", e)}
+                />
+              &lt;/Grid>
+              &lt;Grid item xs={12}>
+                &lt;TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="password"
+                  onChange={e => this.userTyping("password", e)}
+                />
+              &lt;/Grid>
+              &lt;Grid item xs={12}>
+                &lt;TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password Confirmation"
+                  type="password"
+                  id="password-confirmation"
+                  autoComplete="passwordConfirmation"
+                  onChange={e => this.userTyping("passwordConfirmation", e)}
+                />
+              &lt;/Grid>
+
+              &lt;Grid item xs={12}>
+                &lt;Typography
+                  className={classes.typo}
+                  variant="subtitle1"
+                  color="secondary"
+                >
+                  {this.state.signupError}
+                &lt;/Typography>
+              &lt;/Grid>
+            &lt;/Grid>
+            &lt;Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign Up
+            &lt;/Button>
+            &lt;Grid container justify="flex-end">
+              &lt;Grid item>
+                &lt;Link to="/login" variant="body2">
+                  Already have an account? Log in
+                &lt;/Link>
+              &lt;/Grid>
+            &lt;/Grid>
+          &lt;/form>
+        &lt;/div>
+        &lt;Box mt={5}>
+          &lt;Copyright />
+        &lt;/Box>
+      &lt;/Container>
+    );
+  }
+
+  /**
+   * Update the state with the values entered
+   * @param {string} whichInput - Select the value of the state to update
+   * @param {event} event
+   */
+  userTyping = (whichInput, event) => {
+    switch (whichInput) {
+      case "email":
+        this.setState({ email: event.target.value });
+        break;
+
+      case "service":
+        this.setState({ service: event.target.value });
+        break;
+
+      case "position":
+        this.setState({ position: event.target.value });
+        break;
+
+      case "firstName":
+        this.setState({ firstName: event.target.value });
+        break;
+
+      case "lastName":
+        this.setState({ lastName: event.target.value });
+        break;
+
+      case "password":
+        this.setState({ password: event.target.value });
+        break;
+
+      case "passwordConfirmation":
+        this.setState({ passwordConfirmation: event.target.value });
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  /**
+   * Allows to send the registration request to the database
+   * @function
+   * @param {event} e
+   */
+  submitSignup = async e => {
+    e.preventDefault(); // This is to prevent the automatic refreshing of the page on submit.
+    if (!(this.state.password === this.state.passwordConfirmation)) {
+      this.setState({ signupError: "Passwords do not match" });
+      return;
+    }
+
+    try {
+      const dataToValidate = {
+        email: this.state.email,
+        service: this.state.service,
+        position: this.state.position,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        password: this.state.password,
+        date: Date.now(),
+      };
+      //Check is data is valid
+      const result = schema.validate(dataToValidate);
+      if (result.error) {
+        throw result.error.details[0].message;
+      }
+
+      //Retrieves registration requests
+      await firebase
+        .firestore()
+        .collection("applicationRequest")
+        .doc(this.state.email)
+        .set(dataToValidate)
+        .then(() => {
+          this.props.history.push("/login");
+        });
+    } catch (e) {
+      this.setState({ signupError: e });
+    }
+  };
+}
+
+//We export the component by applying the corresponding stylesheet to it
+export default withStyles(useStyles)(RegisterComponent);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DashboardComponent.html">DashboardComponent</a></li><li><a href="DocumentComponent.html">DocumentComponent</a></li><li><a href="DocumentImportComponent.html">DocumentImportComponent</a></li><li><a href="DocumentTableComponent.html">DocumentTableComponent</a></li><li><a href="LoginComponent.html">LoginComponent</a></li><li><a href="MessageComponent.html">MessageComponent</a></li><li><a href="MessageList.html">MessageList</a></li><li><a href="MessageTextBox.html">MessageTextBox</a></li><li><a href="MessageView.html">MessageView</a></li><li><a href="NavBar.html">NavBar</a></li><li><a href="NewMessage.html">NewMessage</a></li><li><a href="ProfileComponent.html">ProfileComponent</a></li><li><a href="RegisterComponent.html">RegisterComponent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Copyright">Copyright</a></li><li><a href="global.html#createData">createData</a></li><li><a href="global.html#descendingComparator">descendingComparator</a></li><li><a href="global.html#EnhancedTableHead">EnhancedTableHead</a></li><li><a href="global.html#getComparator">getComparator</a></li><li><a href="global.html#getStyles">getStyles</a></li><li><a href="global.html#handleClick">handleClick</a></li><li><a href="global.html#newMessage">newMessage</a></li><li><a href="global.html#stableSort">stableSort</a></li><li><a href="global.html#UserComponent">UserComponent</a></li><li><a href="global.html#useStyles">useStyles</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Mar 03 2021 23:19:57 GMT+0100 (heure normale d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

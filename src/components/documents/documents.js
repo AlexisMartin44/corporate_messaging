@@ -43,6 +43,16 @@ class DocumentComponent extends React.Component {
       });
   };
 
+  /**
+   * @desc fix warning: Can't perform a React state update on an unmounted component
+   * @function
+   */
+  componentWillUnmount() {
+    this.setState = (state, callback) => {
+      return;
+    };
+  }
+
   //Render method of Document component
   render() {
     const { classes } = this.props;

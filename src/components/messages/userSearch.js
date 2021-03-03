@@ -46,15 +46,29 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+/**
+ * @desc Allows to display the desired user profile
+ * @param {Object} props - Props of the component
+ * @function
+ */
 const handleClick = props => {
   props.setUserToShow(props.user);
 };
 
+/**
+ * @desc Launches the newMessageComponent directly without consulting the profile
+ * @param {Object} props - Props of the component
+ * @function
+ */
 const newMessage = props => {
   props.setUserToShow(props.user);
   props.newChat();
 };
 
+/**
+ * @desc Component entirely found in material-ui, nice user presentation box
+ * @function
+ */
 export const UserComponent = React.memo(function TutorCard(props) {
   const styles = useStyles();
   const iconBtnStyles = useSizedIconButtonStyles({ padding: 8 });
@@ -65,6 +79,7 @@ export const UserComponent = React.memo(function TutorCard(props) {
     },
   }));
   return (
+    // Line
     <Row
       p={0.5}
       gap={2}
@@ -72,9 +87,11 @@ export const UserComponent = React.memo(function TutorCard(props) {
       borderRadius={16}
       className={styles.row}
     >
+      {/* First item, the avatar profile */}
       <Item onClick={handleClick.bind(this, props)}>
         <Avatar classes={avatarStyles} src={props.user.image} />
       </Item>
+      {/* User data */}
       <Info
         onClick={handleClick.bind(this, props)}
         position={"middle"}
@@ -91,6 +108,7 @@ export const UserComponent = React.memo(function TutorCard(props) {
           {props.user.position}
         </InfoSubtitle>
       </Info>
+      {/* Icon button that allows to directly send a message */}
       <Item
         onClick={newMessage.bind(this, props)}
         className={styles.button}
