@@ -13,13 +13,7 @@ import DashboardComponent from "./components/dashboard/dashboard";
 require("firebase/firestore");
 
 firebase.initializeApp({
-  apiKey: "AIzaSyA4q3i0kbwLYXW2S-KsMJ0-cEkSHVaTF2o",
-  authDomain: "msg-instant.firebaseapp.com",
-  projectId: "msg-instant",
-  storageBucket: "msg-instant.appspot.com",
-  messagingSenderId: "976711450876",
-  appId: "1:976711450876:web:50d83274697fad10e5d779",
-  measurementId: "G-DTGBYTYQJG",
+  --Private data
 });
 
 const routing = (
